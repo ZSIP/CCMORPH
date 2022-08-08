@@ -4,7 +4,7 @@ session_start();
 $json = file_get_contents('php://input');
 
 echo($json);
-$conn = pg_connect("host=localhost port=5432 dbname=klikaczu user=florapom password=urticaDactylis");
+$conn = pg_connect("host=localhost port=5432 dbname=database_name user=user_name password=user_password");
 
 
 $jsonout = (json_decode($json,true));
