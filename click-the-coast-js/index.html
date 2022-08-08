@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Klika czu</title>
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.css" />
+
+  <link rel="stylesheet" href="assets/css/login.css">
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  <script src="https://unpkg.com/@raruto/leaflet-elevation@1.7.5/dist/leaflet-elevation.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.2/underscore-umd-min.js"></script>
+
+  <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+
+  <script src="scripts/config.js"></script>
+  <script src="scripts/main.js"></script>
+</head>
+
+<body>
+  <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div id="mobilePanel" class="col-sm-12">
+          no raczej nie na telefonie ...
+        </div>
+        <div id="leftPanel" class="col-sm-6 login-section-wrapper">
+          <div class="brand-wrapper">
+            <img src="assets/images/zut.jpg" alt="logo" class="logo">
+          </div>
+          <div class="login-wrapper my-auto">
+            <h1 class="login-title">Click The Coast</h1>
+            <form>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="email@example.com"
+                  required>
+              </div>
+              <div class="form-group mb-4">
+                <label for="idText">Identifier</label>
+                <input type="text" name="idText" id="idText" class="form-control" placeholder="enter ID"
+                  required>
+              </div>
+              <input name="next" id="next" class="btn btn-block login-btn" type="button" value="Next">
+            </form>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radios" id="randomRadio" value="random" checked>
+            <label class="form-check-label" for="exampleRadios">
+              Random set of maps
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="radios" id="seriesRadio" value="series">
+            <label class="form-check-label" for="seriesRadio">
+              Map sequence
+            </label>
+          </div>
+          <div id="seriesSelect">
+            <div id="firstProfileForm" class="form-outline" style="display: none;">
+              <input type="number" id="firstProfile" class="form-control" min="1" value="1"/>
+              <label class="form-label" for="firstProfile">first profile in the series</label>
+            </div>
+            <div id="seriezSizeForm" class="form-outline">  
+              <input type="number" id="seriesSize" class="form-control" min="1" value="10"/>
+              <label class="form-label" for="seriesSize">how many profiles in the series</label>            
+            </div>
+          </div>
+        </div>
+        <div id="mainPanel" class="col-sm-11 d-none map-wrapper">
+          <div id="map" class="leaflet-map"></div>
+          <a href='#' class="full-text export btn login-btn" type="button">NEXT</a>
+          <a href='#' class="short-text export btn login-btn" type="button"></a>
+          <a id='name'>...</a>
+        <div id="infoPanel" class="col-sm-5 d-none info-section-wrapper">
+          <p>Space for your additional information </p>
+        </div>
+        <div id="rightPanel" class="col-sm-6 px-0 d-sm-block">
+          <img src="assets/images/login1.jpg" alt="login image" class="login-img">
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

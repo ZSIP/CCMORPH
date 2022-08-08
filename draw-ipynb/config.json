@@ -1,0 +1,15 @@
+{
+    "csv": {
+        "profiles": {
+            "path": "../data.big/output/profiles/cropped",
+            "sep": "\t"
+        },
+        "results": {
+            "path": "../data.big/output/results_all.csv",
+            "sep": "\t"
+        }
+    },
+    "figures": {
+        "path": "../data.big/output/figures"
+    }
+}

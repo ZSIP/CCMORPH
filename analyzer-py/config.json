@@ -1,0 +1,25 @@
+{
+    "csv": {
+        "profiles": {
+            "path": "../data.old/output/profiles/cropped",
+            "sep": "\t"
+        },
+        "output": {
+            "path": "../data.old/results_all.csv",
+            "sep": "\t"
+        }
+    },
+    "smoothness": {
+        "use": false,
+        "window": 9,
+        "degree": 3
+    },
+    "debug": {
+        "use": true,
+        "path": "../data.old/output/debug"
+    },
+    "selected_profiles": [],
+    "min_profile_points": 20,
+    "elevation_threshold": 3,
+    "max_error": 3
+}
