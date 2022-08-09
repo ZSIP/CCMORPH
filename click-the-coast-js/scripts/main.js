@@ -143,6 +143,9 @@ const getProfileNames = function () {
     // get full list of profiles
     $.getJSON(`${config.paths.names}`, function(json){
         let fullArray = json.names || [];
+        let re = /^(\d+)(_.*)/;
+        fullArray = fullArray.sort((a,b) => Number(re.exec(a)[1]) - Number(re.exec(b)[1]));
+
         if(isRandomChoice) {
             if(seriesSize >= fullArray.length) {
                 retVal = fullArray;
