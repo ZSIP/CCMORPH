@@ -1,11 +1,11 @@
 {
     "csv": {
         "profiles": {
-            "path": "../data.old/output/profiles/cropped",
+            "path": "../data/output/profiles/cropped",
             "sep": "\t"
         },
         "output": {
-            "path": "../data.old/results_all.csv",
+            "path": "../data/results_all.csv",
             "sep": "\t"
         }
     },
@@ -16,7 +16,7 @@
     },
     "debug": {
         "use": true,
-        "path": "../data.old/output/debug"
+        "path": "../data/output/debug"
     },
     "selected_profiles": [],
     "min_profile_points": 20,

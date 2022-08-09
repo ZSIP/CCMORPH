@@ -1,4 +1,3 @@
-import os
 import math
 import pandas as pd
 
@@ -135,9 +134,5 @@ def method_1(profile, begin_no, end_no, min_profile_points=20, elevation_thresho
 
     if debug:
         retVal['debug'] = debug_info
-            # debug_file = os.path.join(
-            #     debug_path, f"M1_profile_{profile_id}_debug.csv"
-            # )
-            # debug_info.to_csv(debug_file)
 
     return retVal
