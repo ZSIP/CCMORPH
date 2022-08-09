@@ -210,7 +210,7 @@ $(() => {
             xhr.addEventListener("load", () => {
                 window.parent.postMessage('next', '*');
             });
-            xhr.open("POST", "./scripts/plik.php", true);
+            xhr.open("POST", "./scripts/main.php", true);
             xhr.send(JSON.stringify({
                 points: points.features.map(f => f.geometry.coordinates),
                 profile: state.data.name,
