@@ -2,7 +2,13 @@ const config = {
     paths: {
         geojson: 'data/output/web/geojson',
         clip: 'data/output/web/geotiff',
-        names: 'data/output/web/names/names.json'
+        names: 'data/output/web/names/names.json',
+        shaper: 'data/output/web/results/shaper.csv'
+    },
+    csv: {
+        shaper: {
+            separator: ","
+        }
     },
     map: {
         options: {

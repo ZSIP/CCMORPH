@@ -53,7 +53,7 @@
             "crs": "epsg:2180"
         },
         "profile_cropped": {
-            "sep": "\t",
+            "sep": ",",
             "encoding": "utf-8-sig",
             "crs": "epsg:4326"
         }        

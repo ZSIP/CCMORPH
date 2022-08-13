@@ -107,5 +107,5 @@ output = config["csv"]["output"]["path"]
 files = output if isinstance(output, list) else [output]
 for file in files:
     pd.DataFrame(results).to_csv(
-        file, sep=config["csv"]["output"]["sep"]
+        file, sep=config["csv"]["output"]["sep"], index=False, encoding='utf-8'
     )

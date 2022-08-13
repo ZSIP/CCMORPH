@@ -51,6 +51,7 @@ const prepareData = function (email, id) {
     };
     // retVal.tests = getProfileNames();
     getProfileNames();
+    
     return retVal;
 }
 
@@ -137,31 +138,42 @@ const initMap = function () {
 
 const getProfileNames = function () {
     let retVal = [];
+    let csv = [];
     let isRandomChoice = $('#randomRadio').is(':checked');
     let seriesSize = Number($('#seriesSize').val()) || 1;
     let firstProfile = Number($('#firstProfile').val()) || 1;
     // get full list of profiles
-    $.getJSON(`${config.paths.names}`, function(json){
-        let fullArray = json.names || [];
-        let re = /^(\d+)(_.*)/;
-        fullArray = fullArray.sort((a,b) => Number(re.exec(a)[1]) - Number(re.exec(b)[1]));
-
-        if(isRandomChoice) {
-            if(seriesSize >= fullArray.length) {
-                retVal = fullArray;
-            } else {
-                let indexes = new Set();
-                while (indexes.size < seriesSize) {
-                    indexes.add(Math.floor(Math.random() * fullArray.length)); //!!!
+    $.get(`${config.paths.shaper}`, function(data){
+        csv = $.csv.toObjects(data, {separator: config.csv.shaper.separator});
+        $.getJSON(`${config.paths.names}`, function(json){
+            let fullArray = json.names || [];
+            let re = /^(\d+)(_.*)/;
+            fullArray = fullArray.sort((a,b) => Number(re.exec(a)[1]) - Number(re.exec(b)[1]));
+            filteredArray = filterNamesByShaperResults(fullArray, csv);
+            if(isRandomChoice) {
+                if(seriesSize >= filteredArray.length) {
+                    retVal = filteredArray;
+                } else {
+                    let indexes = new Set();
+                    while (indexes.size < seriesSize) {
+                        indexes.add(Math.floor(Math.random() * filteredArray.length)); //!!!
+                    }
+                    [...indexes].sort((a,b) => a-b).forEach(a => retVal.push(filteredArray[a]));
                 }
-                [...indexes].sort((a,b) => a-b).forEach(a => retVal.push(fullArray[a]));
+            } else {
+                retVal = filteredArray.slice(firstProfile - 1, firstProfile - 1 + seriesSize);
             }
-        } else {
-            retVal = fullArray.slice(firstProfile - 1, firstProfile - 1 + seriesSize);
-        }
-        // remove .geojson extensions
-        state.data.tests = retVal.map(name => name.replace('.geojson', ''));
+            // remove .geojson extensions
+            state.data.tests = retVal.map(name => name.replace('.geojson', ''));
+        });
     });
+
+}
+
+const filterNamesByShaperResults = function (names, shaperCsv) {
+    profileIds = shaperCsv.filter(p => p.top && p.bottom && p.top.length && p.bottom.length).map(p => p.profile_id);
+    
+    return names.filter(name => !profileIds.some( id => id === name.match(/^(\d+)(_.*)/)[1]));
 }
 
 const showProfile = function (name) {
