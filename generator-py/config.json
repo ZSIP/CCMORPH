@@ -14,7 +14,9 @@
             "dem_slope": "output/dem/slope",
             "web_geotiff": "output/web/geotiff",
             "web_geojson": "output/web/geojson",
-            "web_names": "output/web/names"
+            "web_names": "output/web/names",
+            "web_results": "output/web/results",
+            "results": "output/results"
         },
         "db": "db/database.gpkg"
     },

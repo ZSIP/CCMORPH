@@ -1,0 +1,26 @@
+{
+    "csv": {
+        "profiles": {
+            "path": "../data/output/profiles/cropped",
+            "sep": "\t"
+        },
+        "output": {
+            "path": ["../data/output/results/shaper.csv", "../data/output/web/results/shaper.csv"],
+            "sep": "\t"
+        }
+    },
+    "smoothness": {
+        "use": false,
+        "window": 9,
+        "degree": 3
+    },
+    "debug": {
+        "use": true,
+        "path": "../data/output/debug"
+    },
+    "selected_profiles": [],
+    "min_profile_points": 10,
+    "elevation_threshold": 3,
+    "method": 1,
+    "max_error": 3
+}
