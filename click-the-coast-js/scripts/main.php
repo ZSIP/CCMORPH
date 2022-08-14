@@ -2,32 +2,22 @@
 session_start();
 
 $json = file_get_contents('php://input');
-
-echo($json);
-$conn = pg_connect("host=localhost port=5432 dbname=database_name user=user_name password=user_password");
-
+file_put_contents('json.txt', $json);
 
 $jsonout = (json_decode($json,true));
-print_r($jsonout);
-$ax= ($jsonout[points][0][0]);
 
+$profile_id = ($jsonout['profile_id']);
+$bottom = ($jsonout['bottom']);
+$top = ($jsonout['top']);
 
-echo($id_user);
+$email = ($jsonout['email']);
+$id = ($jsonout['id']);
 
-$i = 0;
-while ($i <= count($jsonout['profile'])-1)
-{
-$ay= ($jsonout[points][0][1]);
-$bx= ($jsonout[points][1][0]);
-$by= ($jsonout[points][1][1]);
-$profile= ($jsonout[profile]);
-$email= ($jsonout[email]);
-$id_user= ($jsonout[id]);
-   echo($x);
-      $sql = "INSERT INTO public.wydmy (ax, ay, bx, by, profile, email, id_user) VALUES($ax, $ay, $bx, $by, '$profile', '$email', '$id_user')";
-      $result = @pg_exec($conn, $sql) or die (pg_errormessage());
-   
-   $i++;
+$file = ($jsonout['file']);
+$sep = ($jsonout['sep']);
 
-}
+$data = "{$profile_id}{$sep}0{$sep}false{$sep}{$bottom}{$sep}{$top}{$sep}{$id}{$sep}{$email}\n";
+$fp = fopen($file, 'a');
+fwrite($fp, $data);
+
 ?>

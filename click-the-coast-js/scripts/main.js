@@ -108,6 +108,8 @@ const initMap = function () {
             // prevent points outside profile
             if(!state.polygon || !state.polygon.length) {
                 state.polygon = state.controlElevation._data.map(point => [point.x, point.y]);
+                state.profile = state.controlElevation._data.map(point => point.z);
+                state.featureCollection = turf.featureCollection(state.polygon.map(p => turf.point(p)));
             }
             if(turf.pointToLineDistance(center, state.polygon, {units: "meters"}) < config.draw.maxDistance) {
                 state.drawnItems.addLayer(e.layer);
@@ -144,7 +146,7 @@ const getProfileNames = function () {
     let firstProfile = Number($('#firstProfile').val()) || 1;
     // get full list of profiles
     $.get(`${config.paths.shaper}`)
-        .done(data => {csv = $.csv.toObjects(data, {separator: config.csv.shaper.separator});})
+        .done(data => {csv = $.csv.toObjects(data, {separator: config.csv.shaper.sep});})
         .always(() => {
             $.getJSON(`${config.paths.names}`, function(json){
                 let fullArray = json.names || [];
@@ -186,6 +188,7 @@ const showProfile = function (name) {
             // state.imageOverlay = L.imageOverlay(`${config.paths.clip}/${name}.tif`, state.bbox, config.image.options).addTo(state.map);
             state.imageOverlay = true;
             state.data.name = name;
+            state.data.profileId = name.match(/^(\d+)_/)[1];
             setMapTitle(name);
         });
     } else {
@@ -220,6 +223,8 @@ $(() => {
             correctInput($('.row    '), 'Mark two points (base and top)');
         } else {
             let points = state.drawnItems.toGeoJSON();
+            let idx1 = turf.nearestPoint(turf.flip(points.features[0]), state.featureCollection).properties.featureIndex;
+            let idx2 = turf.nearestPoint(turf.flip(points.features[1]), state.featureCollection).properties.featureIndex;
 
             let xhr = new XMLHttpRequest();
             xhr.addEventListener("load", () => {
@@ -227,10 +232,13 @@ $(() => {
             });
             xhr.open("POST", "./scripts/main.php", true);
             xhr.send(JSON.stringify({
-                points: points.features.map(f => f.geometry.coordinates),
-                profile: state.data.name,
+                profile_id: state.data.profileId,
+                top: state.profile[idx1] > state.profile[idx2] ? idx1 : idx2,
+                bottom: state.profile[idx1] > state.profile[idx2] ? idx2 : idx1,
                 email: state.data.email,
-                id: state.data.id
+                id: state.data.id,
+                file: `../${config.paths.manual}`,
+                sep: config.csv.manual.sep
             }));
 
             testToTest();

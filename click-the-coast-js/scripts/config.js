@@ -3,11 +3,15 @@ const config = {
         geojson: 'data/output/web/geojson',
         clip: 'data/output/web/geotiff',
         names: 'data/output/web/names/names.json',
-        shaper: 'data/output/web/results/shaper.csv'
+        shaper: 'data/output/web/results/shaper.csv',
+        manual: 'data/output/web/results/manual.csv'
     },
     csv: {
         shaper: {
-            separator: ","
+            sep: ","
+        },
+        manual: {
+            sep: ","
         }
     },
     map: {
