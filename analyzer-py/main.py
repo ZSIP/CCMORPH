@@ -11,6 +11,7 @@ from analyzer import get_points_by_elevation, get_volume, get_distance, get_slop
 # get config
 with open("config.json", "r") as jsonfile:
     config = json.load(jsonfile)
+paths = config["paths"]
 csv_profiles = config["csv"]["profiles"]
 csv_points = config["csv"]["points"]
 csv_output = config["csv"]["output"]
@@ -19,9 +20,9 @@ csv_output = config["csv"]["output"]
 selected = True if len(config["selected_profiles"]) > 0 else False
 
 # load CSV files conaining bottom and top points
-point_files = natsorted(glob.glob(f'{str(csv_points["path"])}/*.csv'))
+point_files = natsorted(glob.glob(f'{str(paths["input"]["points"])}/*.csv')) # todo
 points = pd.read_csv(
-    join(csv_points["path"], csv_points["first"]), encoding="utf-8", sep=csv_points["sep"], skipinitialspace=True
+    join(paths["input"]["points"], csv_points["first"]), encoding="utf-8", sep=csv_points["sep"], skipinitialspace=True # todo
 )
 for file in point_files:
     next_points = pd.read_csv(
@@ -31,7 +32,7 @@ for file in point_files:
 points = points.dropna(subset=['bottom','top']) # remove rows with NaN bottom & top
 
 # list profile files
-profile_files = natsorted(glob.glob(f'{str(csv_profiles["path"])}/*.csv'))
+profile_files = natsorted(glob.glob(f'{str(paths["input"]["profiles"])}/*.csv')) # todo
 profile_files_count = len(profile_files)
 counter = 0
 
@@ -99,7 +100,7 @@ for name in profile_files:
     results = pd.concat([results, pd.DataFrame([result])])
 
 # save CSV
-results.to_csv(join(csv_output["path"], csv_output["first"]), sep=csv_output["sep"])
+results.to_csv(join(paths["output"]["finall"], csv_output["first"]), sep=csv_output["sep"]) # todo
 
 # save SHP
 bottom_points = gpd.GeoDataFrame(results[["profile_id", "bottom_id", "method", "bottom_elevation"]], geometry=gpd.points_from_xy(results.bottom_x, results.bottom_y))
@@ -107,5 +108,5 @@ bottom_points.rename(columns = {'bottom_elevation':'elevation'}, inplace = True)
 top_points = gpd.GeoDataFrame(results[["profile_id", "top_id", "method", "top_elevation"]], geometry=gpd.points_from_xy(results.top_x, results.top_y))
 top_points.rename(columns = {'top_elevation':'elevation'}, inplace = True)
 
-bottom_points.to_file(join(config["shape"]["path"], "bottomPoints"), crs=config["shape"]["crs"])
-top_points.to_file(join(config["shape"]["path"], "topPoints"), crs=config["shape"]["crs"])
+bottom_points.to_file(join(paths["output"]["finall"], "bottomPoints"), crs=config["shape"]["crs"]) # todo
+top_points.to_file(join(paths["output"]["finall"], "topPoints"), crs=config["shape"]["crs"]) # todo

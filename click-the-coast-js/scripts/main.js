@@ -145,10 +145,10 @@ const getProfileNames = function () {
     let seriesSize = Number($('#seriesSize').val()) || 1;
     let firstProfile = Number($('#firstProfile').val()) || 1;
     // get full list of profiles
-    $.get(`${config.paths.shaper}`)
+    $.get(`${config.paths.input.shaper}`)
         .done(data => {csv = $.csv.toObjects(data, {separator: config.csv.shaper.sep});})
         .always(() => {
-            $.getJSON(`${config.paths.names}`, function(json){
+            $.getJSON(`${config.paths.input.names}`, function(json){
                 let fullArray = json.names || [];
                 let re = /^(\d+)(_.*)/;
                 fullArray = fullArray.sort((a,b) => Number(re.exec(a)[1]) - Number(re.exec(b)[1]));
@@ -159,7 +159,7 @@ const getProfileNames = function () {
                     } else {
                         let indexes = new Set();
                         while (indexes.size < seriesSize) {
-                            indexes.add(Math.floor(Math.random() * filteredArray.length)); //!!!
+                            indexes.add(Math.floor(Math.random() * filteredArray.length));
                         }
                         [...indexes].sort((a,b) => a-b).forEach(a => retVal.push(filteredArray[a]));
                     }
@@ -182,8 +182,8 @@ const showProfile = function (name) {
     if (name) {
         resetMap();
         state.polygon = [];
-        state.controlElevation.load(`${config.paths.geojson}/${name}.geojson`);
-        $.getJSON(`${config.paths.clip}/${name}_bbox.json`, function (json) {
+        state.controlElevation.load(`${config.paths.input.geojson}/${name}.geojson`);
+        $.getJSON(`${config.paths.input.clip}/${name}_bbox.json`, function (json) {
             state.bbox = json['bbox'];
             // state.imageOverlay = L.imageOverlay(`${config.paths.clip}/${name}.tif`, state.bbox, config.image.options).addTo(state.map);
             state.imageOverlay = true;
@@ -237,7 +237,7 @@ $(() => {
                 bottom: state.profile[idx1] > state.profile[idx2] ? idx2 : idx1,
                 email: state.data.email,
                 id: state.data.id,
-                file: `../${config.paths.manual}`,
+                file: `../${config.paths.output.manual}`,
                 sep: config.csv.manual.sep
             }));
 

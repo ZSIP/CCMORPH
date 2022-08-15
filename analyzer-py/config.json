@@ -1,23 +1,28 @@
 {
+    "paths": {
+        "input": {
+            "profiles": "../data/output/profiles/cropped",
+            "points": "../data/output/web/results"
+        },
+        "output": {
+            "finall": "../data/output/finall"
+        }
+    },
     "csv": {
         "profiles": {
-            "path": "../data/output/profiles/cropped",
             "sep": ","
         },
         "points": {
-            "path": "../data/output/web/results",
             "first": "shaper.csv",
             "colnames": ["profile_id", "method", "smooth", "bottom", "top", "id", "email"],
             "sep": ","            
         },
         "output": {
-            "path": "../data/output/finall",
             "first": "measurement.csv",
             "sep": ","
         }
     },
     "shape": {
-        "path": "../data/output/finall",
         "crs": "epsg:2180"
     },
     "selected_profiles": [],

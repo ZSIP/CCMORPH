@@ -1,11 +1,17 @@
 {
+    "paths": {
+        "input": {
+            "profiles": "../data/output/profiles/cropped"
+        },
+        "output": {
+            "results": ["../data/output/results/shaper.csv", "../data/output/web/results/shaper.csv"]
+        }
+    },
     "csv": {
         "profiles": {
-            "path": "../data/output/profiles/cropped",
             "sep": ","
         },
         "output": {
-            "path": ["../data/output/results/shaper.csv", "../data/output/web/results/shaper.csv"],
             "sep": ","
         }
     },

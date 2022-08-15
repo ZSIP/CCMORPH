@@ -1,6 +1,6 @@
-profile_id,method,smooth,top,bottom
-1,1,False,51.0,2.0
+profile_id,method,smooth,bottom,top
+1,1,False,2.0,51.0
 2,1,False,,
-3,1,False,51.0,27.0
+3,1,False,27.0,51.0
 4,1,False,,
 5,1,False,,

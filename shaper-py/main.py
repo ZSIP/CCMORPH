@@ -16,6 +16,7 @@ pd.options.mode.chained_assignment = None
 # get config
 with open("config.json", "r") as jsonfile:
     config = json.load(jsonfile)
+paths = config["paths"]
 csv_profiles = config["csv"]["profiles"]
 debug_path = config["debug"]["path"]
 method = config["method"]
@@ -30,11 +31,11 @@ else:
 # all or selected profiles?
 selected = True if len(config["selected_profiles"]) > 0 else False
 
-# list of obtained results / todo: comment
+# list of obtained results
 results = []
 
 # list profile files
-profile_files = natsorted(glob.glob(f'{str(csv_profiles["path"])}/*.csv'))
+profile_files = natsorted(glob.glob(f'{str(paths["input"]["profiles"])}/*.csv'))
 profile_files_count = len(profile_files)
 counter = 0
 
@@ -103,7 +104,7 @@ for name in profile_files:
             result["debug"].to_csv(debug_file)
 
 # export results to CSV file/files (all profiles together)
-output = config["csv"]["output"]["path"]
+output = paths["output"]["results"]
 files = output if isinstance(output, list) else [output]
 for file in files:
     pd.DataFrame(results).to_csv(
