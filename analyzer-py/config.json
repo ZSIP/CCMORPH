@@ -2,24 +2,25 @@
     "csv": {
         "profiles": {
             "path": "../data/output/profiles/cropped",
-            "sep": "\t"
+            "sep": ","
+        },
+        "points": {
+            "path": "../data/output/web/results",
+            "first": "shaper.csv",
+            "colnames": ["profile_id", "method", "smooth", "bottom", "top", "id", "email"],
+            "sep": ","            
         },
         "output": {
-            "path": "../data/results_all.csv",
-            "sep": "\t"
+            "path": "../data/output/finall",
+            "first": "measurement.csv",
+            "sep": ","
         }
     },
-    "smoothness": {
-        "use": false,
-        "window": 9,
-        "degree": 3
-    },
-    "debug": {
-        "use": true,
-        "path": "../data/output/debug"
+    "shape": {
+        "path": "../data/output/finall",
+        "crs": "epsg:2180"
     },
     "selected_profiles": [],
-    "min_profile_points": 20,
-    "elevation_threshold": 3,
+    "methods_order": [1, 2, 0],
     "max_error": 3
 }

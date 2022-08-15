@@ -16,7 +16,8 @@
             "web_geojson": "output/web/geojson",
             "web_names": "output/web/names",
             "web_results": "output/web/results",
-            "results": "output/results"
+            "results": "output/results",
+            "finall": "output/finall"
         },
         "db": "db/database.gpkg"
     },

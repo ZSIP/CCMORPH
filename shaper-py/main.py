@@ -92,8 +92,8 @@ for name in profile_files:
                 "profile_id": profile_id,
                 "method": method,
                 "smooth": config["smoothness"]["use"],
+                "bottom": result["bottom"],                
                 "top": result["top"],
-                "bottom": result["bottom"],
             }
         )
 
