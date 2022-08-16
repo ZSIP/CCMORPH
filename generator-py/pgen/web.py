@@ -30,7 +30,7 @@ def export_geojson(cfg):
     ) = config.parse(cfg, export_geojson.__name__)
 
     try:
-        cropped_profiles = cropp_profiles(
+        cropped_profiles = crop_profiles(
             db, profiles_layer, buffer_path, buffer_crs, export_crs
         )
         geojson_template = ast.literal_eval(geojson_template_json)
@@ -78,7 +78,7 @@ def export_geojson(cfg):
         raise e
 
 
-def cropp_profiles(db, profiles_layer, buffer_path, buffer_crs, export_crs):
+def crop_profiles(db, profiles_layer, buffer_path, buffer_crs, export_crs):
     profiles = gpd.read_file(db, layer=profiles_layer["name"], index="dem").to_crs(
         buffer_crs
     )

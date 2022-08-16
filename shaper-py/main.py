@@ -5,7 +5,7 @@ from tkinter.ttk import Separator
 from natsort import natsorted
 import pandas as pd
 import numpy as np
-from os.path import join, isdir
+from os.path import join, isdir, basename
 from os import mkdir, remove
 from halo import Halo as spiner
 
@@ -45,7 +45,7 @@ for name in profile_files:
         counter += 1
         
         # get profile number from file name
-        profile_id = int(re.findall("\d{1,4}", name)[0])
+        profile_id = int(re.findall("\d{1,4}", basename(name))[0])
 
         # analyze all or selected profiles?
         if selected:
@@ -59,6 +59,7 @@ for name in profile_files:
 
         # check if any profile points are located in the selected area (id == 1.0)
         cut = csv[csv["id"] > 0]
+        # print(f'{profile_id}   {len()}  {len()}')
         if len(cut) == 0:
             continue
         first_no = cut.iloc[0]["no_point"]

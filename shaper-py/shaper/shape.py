@@ -105,9 +105,9 @@ def method_1(profile, begin_no, end_no, min_profile_points=20, elevation_thresho
             retVal["top"] = D_high_idx
 
             if D_high_idx > 0:
-                # begin? end?
-                e_th = profile.loc[profile['elevation'] > elevation_threshold]
-                e_0 = profile.loc[profile['elevation'] >= 0]
+                # begin? end? todo
+                e_th = profile[begin_no:end_no].loc[profile['elevation'] > elevation_threshold]
+                e_0 = profile[begin_no:end_no].loc[profile['elevation'] >= 0]
                 if e_th.iloc[0].no_point - e_0.iloc[0].no_point <= 0:
                     set_status(retVal, 'invalid elevation threshold')
                     return retVal

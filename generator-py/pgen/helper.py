@@ -1,4 +1,5 @@
 import glob
+import shutil
 import geopandas as gpd
 from os.path import exists, isdir, join, dirname
 from os import makedirs, remove
@@ -62,7 +63,10 @@ def check_output_path(base, output):
         except FileExistsError:
             files = glob.glob(join(outpath, "*"))
             for file in files:
-                remove(file)
+                if isdir(file):
+                    shutil.rmtree(file)
+                else:
+                    remove(file)
         except:
             raise Exception(
                 f"... paths error: there is a proble with one of output paths ({outpath}). Check config.json."

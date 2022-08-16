@@ -4,7 +4,7 @@ import glob
 from natsort import natsorted
 import pandas as pd
 import geopandas as gpd
-from os.path import join
+from os.path import join, basename
 
 from analyzer import get_points_by_elevation, get_volume, get_distance, get_slope
 
@@ -24,6 +24,7 @@ point_files = natsorted(glob.glob(f'{str(paths["input"]["points"])}/*.csv')) # t
 points = pd.read_csv(
     join(paths["input"]["points"], csv_points["first"]), encoding="utf-8", sep=csv_points["sep"], skipinitialspace=True # todo
 )
+point_files.remove(join(paths["input"]["points"], csv_points["first"]))
 for file in point_files:
     next_points = pd.read_csv(
         file, encoding="utf-8", sep=csv_points["sep"], skipinitialspace=True, names=csv_points["colnames"]
@@ -41,7 +42,7 @@ results = pd.DataFrame()
 for name in profile_files:
     counter += 1
     # get profile number from file name
-    profile_id = int(re.findall("\d{1,4}", name)[0])
+    profile_id = int(re.findall("\d{1,4}", basename(name))[0])
 
     # analyze all or selected profiles?
     if selected:
