@@ -5,8 +5,9 @@ from natsort import natsorted
 import pandas as pd
 import geopandas as gpd
 from os.path import join, basename
+from halo import Halo as spiner
 
-from analyzer import get_points_by_elevation, get_volume, get_distance, get_slope
+from analyzer import get_volume, get_distance, get_slope
 
 # get config
 with open("config.json", "r") as jsonfile:
@@ -40,65 +41,66 @@ counter = 0
 # loop through the profiles folder
 results = pd.DataFrame()
 for name in profile_files:
-    counter += 1
-    # get profile number from file name
-    profile_id = int(re.findall("\d{1,4}", basename(name))[0])
+    with spiner(text=f"{counter} / {profile_files_count} -> {basename(name)}", spinner="dots"):
+        counter += 1
+        # get profile number from file name
+        profile_id = int(re.findall("\d{1,4}", basename(name))[0])
 
-    # analyze all or selected profiles?
-    if selected:
-        if profile_id not in config["selected_profiles"]:
+        # analyze all or selected profiles?
+        if selected:
+            if profile_id not in config["selected_profiles"]:
+                continue
+
+        # read CSV profile file
+        csv = pd.read_csv(
+            name, encoding="utf-8", sep=csv_profiles["sep"], skipinitialspace=True
+        )
+
+        # select points by profile id
+        profile_points = points[points.profile_id == profile_id]
+        correct_points = pd.DataFrame()
+        for method in config["methods_order"]:
+            tmp_points = profile_points[profile_points.method == method]
+            if len(tmp_points):
+                correct_points = pd.concat([correct_points, tmp_points])
+                if method != 0: # 0 - manual
+                    break
+        method = -1
+        if len(correct_points):
+            correct_points = correct_points[correct_points.method == correct_points.iloc[0].method]
+            if len(correct_points) > 1:
+                m_top, m_bottom = correct_points.top.median(axis = 0), correct_points.bottom.median(axis = 0)
+                correct_points = correct_points[abs(correct_points.top - m_top) < config["max_error"]]
+                correct_points = correct_points[abs(correct_points.bottom - m_bottom) < config["max_error"]]
+                if len(correct_points):
+                    m_top, m_bottom = round(correct_points.top.median(axis = 0)), round(correct_points.bottom.median(axis = 0))
+        
+        if len(correct_points) == 0:
             continue
 
-    # read CSV profile file
-    csv = pd.read_csv(
-        name, encoding="utf-8", sep=csv_profiles["sep"], skipinitialspace=True
-    )
+        top_id = m_top if len(correct_points) > 1 else int(correct_points.iloc[0].top)
+        bottom_id = m_bottom if len(correct_points) > 1 else int(correct_points.iloc[0].bottom)
 
-    # select points by profile id
-    profile_points = points[points.profile_id == profile_id]
-    correct_points = pd.DataFrame()
-    for method in config["methods_order"]:
-        tmp_points = profile_points[profile_points.method == method]
-        if len(tmp_points):
-            correct_points = pd.concat([correct_points, tmp_points])
-            if method != 0: # 0 - manual
-                break
-    method = -1
-    if len(correct_points):
-        correct_points = correct_points[correct_points.method == correct_points.iloc[0].method]
-        if len(correct_points) > 1:
-            m_top, m_bottom = correct_points.top.median(axis = 0), correct_points.bottom.median(axis = 0)
-            correct_points = correct_points[abs(correct_points.top - m_top) < config["max_error"]]
-            correct_points = correct_points[abs(correct_points.bottom - m_bottom) < config["max_error"]]
-            if len(correct_points):
-                m_top, m_bottom = round(correct_points.top.median(axis = 0)), round(correct_points.bottom.median(axis = 0))
-    
-    if len(correct_points) == 0:
-        continue
+        bottom = csv[csv.no_point == bottom_id]
+        top = csv[csv.no_point == top_id]
 
-    top_id = m_top if len(correct_points) > 1 else int(correct_points.iloc[0].top)
-    bottom_id = m_bottom if len(correct_points) > 1 else int(correct_points.iloc[0].bottom)
+        result = {
+            "profile_id": profile_id,
+            "bottom_id": bottom_id,
+            "top_id": top_id,
+            "distance": get_distance(csv, bottom_id, top_id),
+            "slope": get_slope(csv, bottom_id, top_id),
+            "volume": get_volume(1, csv, bottom_id, top_id, True),
+            "method": correct_points.iloc[0].method,
+            "bottom_x": bottom.x_geo.values[0],
+            "bottom_y": bottom.y_geo.values[0],
+            "bottom_elevation": bottom.elevation.values[0],
+            "top_x": top.x_geo.values[0],
+            "top_y": top.y_geo.values[0],
+            "top_elevation": top.elevation.values[0]
+        }
 
-    bottom = csv[csv.no_point == bottom_id]
-    top = csv[csv.no_point == top_id]
-
-    result = {
-        "profile_id": profile_id,
-        "bottom_id": bottom_id,
-        "top_id": top_id,
-        "distance": get_distance(csv, bottom_id, top_id),
-        "slope": get_slope(csv, bottom_id, top_id),
-        "volume": get_volume(1, csv, bottom_id, top_id, True),
-        "method": correct_points.iloc[0].method,
-        "bottom_x": bottom.x_geo.values[0],
-        "bottom_y": bottom.y_geo.values[0],
-        "bottom_elevation": bottom.elevation.values[0],
-        "top_x": top.x_geo.values[0],
-        "top_y": top.y_geo.values[0],
-        "top_elevation": top.elevation.values[0]
-    }
-
-    results = pd.concat([results, pd.DataFrame([result])])
+        results = pd.concat([results, pd.DataFrame([result])])
 
 # save CSV
 results.to_csv(join(paths["output"]["finall"], csv_output["first"]), sep=csv_output["sep"]) # todo

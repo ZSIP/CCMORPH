@@ -41,7 +41,7 @@ counter = 0
 
 # loop through the profiles folder
 for name in profile_files:
-    with spiner(text=f"{counter} / {profile_files_count} -> {name}", spinner="dots"):
+    with spiner(text=f"{counter} / {profile_files_count} -> {basename(name)}", spinner="dots"):
         counter += 1
         
         # get profile number from file name
