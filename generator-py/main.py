@@ -30,11 +30,11 @@ try:
     pgen.generate_profiles(config)
 
     # crop profiles
-    print("... cropping profiles")
+    print(f"... cropping profiles")
     pgen.crop_profiles(config)
 
-    # export data for web tool
-    print("... exporting data to a web application")
+    # export data for a web tool
+    print("... exporting data for a web application")
     pgen.export_profiles(config)
 
 except Exception as e:

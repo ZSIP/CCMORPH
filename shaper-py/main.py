@@ -39,6 +39,7 @@ profile_files_count = len(profile_files)
 counter = 0
 
 # loop through the profiles folder
+print("... looking for the base and top of profiles ")
 for name in profile_files:
     with spiner(text=f"{counter} / {profile_files_count} -> {basename(name)}", spinner="dots"):
         counter += 1
@@ -104,6 +105,7 @@ for name in profile_files:
             result["debug"].to_csv(debug_file)
 
 # export results to CSV file/files (all profiles together)
+print("... exporting CSV data")
 output = paths["output"]["results"]
 files = output if isinstance(output, list) else [output]
 for file in files:

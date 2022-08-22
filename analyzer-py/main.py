@@ -39,6 +39,7 @@ profile_files_count = len(profile_files)
 counter = 0
 
 # loop through the profiles folder
+print("... calculation of profile properties")
 results = pd.DataFrame()
 for name in profile_files:
     with spiner(text=f"{counter} / {profile_files_count} -> {basename(name)}", spinner="dots"):
@@ -103,9 +104,11 @@ for name in profile_files:
         results = pd.concat([results, pd.DataFrame([result])])
 
 # save CSV
+print("... exporting profile properties")
 results.to_csv(join(paths["output"]["finall"], csv_output["first"]), sep=csv_output["sep"]) # todo
 
 # save SHP
+print("... exporting SHP data (the base and the top points)")
 bottom_points = gpd.GeoDataFrame(results[["profile_id", "bottom_id", "method", "bottom_elevation"]], geometry=gpd.points_from_xy(results.bottom_x, results.bottom_y))
 bottom_points.rename(columns = {'bottom_elevation':'elevation'}, inplace = True)
 top_points = gpd.GeoDataFrame(results[["profile_id", "top_id", "method", "top_elevation"]], geometry=gpd.points_from_xy(results.top_x, results.top_y))
