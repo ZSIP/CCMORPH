@@ -1,7 +1,6 @@
 import re
 import json
 import glob
-from tkinter.ttk import Separator
 from natsort import natsorted
 import pandas as pd
 import numpy as np
