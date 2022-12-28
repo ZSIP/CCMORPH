@@ -1,9 +1,31 @@
-# Profile-pub
+# CCMORPH The Coastal Cliffs Morphology Analysis Toolbox
 
 Projekt został stworzony z myślą o umożliwieniu analizy wybrzeży morskich na podstawie ...[Paweł T.]
 
 ### requirements
 The calculation requires installation of the following, among others: pandas, geopandas, scipy, gdal, rtree
+
+apt get install python3-rtree
+
+
+
+    6  sudo apt install gdal-bin
+    7  sudo apt install libgdal-dev
+    8  gdalinfo --version
+   95  gdalinfo --version
+  228  pip install --upgrade --force-reinstall gdal
+  229  gdalinfo --version
+  230  pip install --upgrade --force-reinstall gdal==3.4.1
+
+python3 -m venv env
+source env/bin/activate
+
+check gdal version installed in system (gdalinfo --version)
+
+edit requirements.txt - change line GDAL=...
+pip install -r requirements.txt
+
+
 
 <!-- ............................................................................................................................ -->
 ## generator-py
