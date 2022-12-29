@@ -5,6 +5,7 @@ Created on Wed Jan 20 20:18:51 2021
 geopackage database.gpkg can be opened in QGIS
 """
 
+import sys
 import json
 import pgen
 
@@ -37,5 +38,8 @@ try:
     print("... exporting data for a web application")
     pgen.export_profiles(config)
 
+    sys.exit(0)
+
 except Exception as e:
     print(f"{type(e)}: {e}")
+    sys.exit(1)

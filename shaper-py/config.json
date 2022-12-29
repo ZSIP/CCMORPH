@@ -1,10 +1,10 @@
 {
     "paths": {
         "input": {
-            "profiles": "../data/output/profiles/cropped"
+            "profiles": "../example_2017_data/output/profiles/cropped"
         },
         "output": {
-            "results": ["../data/output/results/shaper.csv", "../data/output/web/results/shaper.csv"]
+            "results": ["../example_2017_data/output/results/shaper_method_1.csv", "../example_2017_data/output/web/results/shaper_method_1.csv"]
         }
     },
     "csv": {
@@ -22,7 +22,7 @@
     },
     "debug": {
         "use": true,
-        "path": "../data/output/debug"
+        "path": "../example_2017_data/output/debug"
     },
     "selected_profiles": [],
     "min_profile_points": 10,

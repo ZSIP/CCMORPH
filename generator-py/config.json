@@ -1,6 +1,6 @@
 {
     "paths": {
-        "base": "../data",
+        "base": "../example_2017_data",
         "input": {
             "coastline": "input/coast",
             "dem": "input/dem",
@@ -70,8 +70,8 @@
     },
     
     "transect": {
-        "distance": 10000,
-        "length": 100
+        "distance": 50,
+        "length": 500
     },
 
     "dem": {

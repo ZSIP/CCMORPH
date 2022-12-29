@@ -1,11 +1,11 @@
 {
     "paths": {
         "input": {
-            "profiles": "../data/output/profiles/cropped",
-            "points": "../data/output/web/results"
+            "profiles": "../example_2017_data/output/profiles/cropped",
+            "points": "../example_2017_data/output/web/results"
         },
         "output": {
-            "finall": "../data/output/finall"
+            "finall": "../example_2017_data/output/finall"
         }
     },
     "csv": {
@@ -13,12 +13,12 @@
             "sep": ","
         },
         "points": {
-            "first": "shaper.csv",
+            "first": "shaper_method_1.csv",
             "colnames": ["profile_id", "method", "smooth", "bottom", "top", "id", "email"],
             "sep": ","            
         },
         "output": {
-            "first": "measurement.csv",
+            "first": "measurement_method_1.csv",
             "sep": ","
         }
     },
