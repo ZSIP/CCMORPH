@@ -7,7 +7,7 @@ The repository includes Python tools for automatic analysis of input data (gener
 
 ## __Tools__
 
-## generator-py
+## ```generator-py```
 
 The program is used to generate elevation profiles based on a given coastal DEM file (geotiff), a specified shoreline (shp line) and a trimming area (shp polygon). Basic parameters such as input and output data paths or transect parameters (lengths and spacing) can be set in the config.json file.
 
@@ -32,7 +32,7 @@ The default configuration of the program can be changed by editing the ```genera
 - parameters of generated transects,
 - parameters of layers in the database (names, crs, ...), etc.
 
-## shaper-py
+## ```shaper-py```
 
 The program allows you to automatically determine the base and the top of the cliff on each profile automatically, with one of two methodologies: (1) by approximating the distance between shoreline and the cliff top and (2) by identifying the first and second derivative of the cliff profile. Basic parameters, such as paths or method type, can be set in the config.json file.
 
@@ -51,7 +51,7 @@ The program allows you to automatically determine the base and the top of the cl
 - optional debug parameters,
 etc.
 
-## click-the-coast-js
+## ```click-the-coast-js```
 
 A web application that visualizes elevation profiles in which the base and peak could not be automatically determined. It allows you to manually indicate both parameters of the profile. The profile is displayed as a line on the map (top view) and an intersection (side view). Basic parameters, such as paths, can be set in ```scripts/config.js``` file).
 
@@ -73,7 +73,7 @@ The default configuration can be changed by editing the ```click-the-coast-js/sc
 - map parameters,
 etc.
 
-## analyzer-py
+## ```analyzer-py```
 
 The program collects information about the bases and peaks of profiles (generated automatically and indicated manually) and calculates such properties as distance, slope and volume for them. Parameters to be set in the ```config.json``` file.
 
