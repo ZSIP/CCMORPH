@@ -1,6 +1,6 @@
 {
     "paths": {
-        "base": "../example_2017_data",
+        "base": "../example_2011_data",
         "input": {
             "coastline": "input/coast",
             "dem": "input/dem",
