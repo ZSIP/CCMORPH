@@ -1,10 +1,10 @@
 {
     "paths": {
         "input": {
-            "profiles": "../example_2011_data/output/profiles/cropped"
+            "profiles": "../example_2017_data/output/profiles/cropped"
         },
         "output": {
-            "results": ["../example_2011_data/output/results/shaper_method_2.csv", "../example_2011_data/output/web/results/shaper_method_2.csv"]
+            "results": ["../example_2017_data/output/results/shaper_method_1.csv", "../example_2017_data/output/web/results/shaper_method_1.csv"]
         }
     },
     "csv": {
@@ -21,12 +21,12 @@
         "degree": 3
     },
     "debug": {
-        "use": false,
-        "path": "../example_2011_data/output/debug"
+        "use": true,
+        "path": "../example_2017_data/output/debug"
     },
     "selected_profiles": [],
     "min_profile_points": 10,
     "elevation_threshold": 3,
-    "method": 2,
+    "method": 1,
     "max_error": 3
 }
