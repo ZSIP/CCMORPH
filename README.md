@@ -1,4 +1,4 @@
-# The Coastal Cliffs Morphology Analysis Toolbox (CCMORPH)
+# The Coastal Cliffs Morphology Analysis Toolbox v0.9 (CCMORPH)
 
 The toolbox is series of Python scripts accompanied with JavaScript tool that can be utilized to analyse dynamics of coastal cliffs based on DEM from different sources such as GPS-RTK, UAVs, aerial or terrestrial LiDAR scanners. Python scripts are client-based (run locally), while Java Script tool can be run as a server-based application (in a web-browser environment).
 
