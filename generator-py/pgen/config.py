@@ -68,7 +68,7 @@ def _export_geojson(cfg):
         join(base_path, cfg["paths"]["input"]["web_crop"]),  # buffer_path
         join(base_path, cfg["paths"]["db"]),  # db
         cfg["db"]["layers"]["profiles"],  # profiles_layer
-        cfg["shapes"]["buffer"]["crs"],  # buffer_crs
+        cfg["shapes"]["buffer"]["dst_crs"],  # buffer_crs
         cfg["dem"]["dst_crs"],  # cropped_dem_crs
         cfg["export"]["crs"],  # export_crs
         cfg["export"]["geojson_template"],  # geojson_template_json

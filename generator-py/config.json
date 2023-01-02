@@ -62,10 +62,10 @@
 
     "shapes": {
         "coastline": {
-            "crs": "epsg:2180"
+            "dst_crs": "epsg:2180"
         },
         "buffer": {
-            "crs": "epsg:2180"
+            "dst_crs": "epsg:2180"
         }
     },
     

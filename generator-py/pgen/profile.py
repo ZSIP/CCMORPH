@@ -120,7 +120,7 @@ def crop_profiles(cfg):
     ) = config.parse(cfg, crop_profiles.__name__)
     try:
         buffers = glob.glob(join(buffer_path, "*.shp"))
-        cropping_buffer = gpd.read_file(buffers[0]).to_crs(buffer_shape["crs"])
+        cropping_buffer = gpd.read_file(buffers[0]).to_crs(buffer_shape["dst_crs"])
 
         profile_files = glob.glob(join(in_profile_path, "*.csv"))
 

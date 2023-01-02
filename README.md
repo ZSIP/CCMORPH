@@ -9,7 +9,7 @@ The repository includes Python tools for automatic analysis of input data (gener
 
 ## ```generator-py```
 
-The program is used to generate elevation profiles based on a given coastal DEM file (geotiff), a specified shoreline (shp line) and a trimming area (shp polygon). Basic parameters such as input and output data paths or transect parameters (lengths and spacing) can be set in the config.json file.
+The program is used to generate elevation profiles based on a given coastal DEM file (geotiff), a specified shoreline (SHP line) and a trimming area (SHP polygon). Basic parameters such as input and output data paths or transect parameters (lengths and spacing) can be set in the config.json file. Note that for shoreline and trimming area, in addition to *.shp files, *.prj files should be prepared, containing information about coordinate reference systems. In the configuration (shapes/coastline/dst_crs and shapes/buffer/dst_crs), you specify to which system they are to be transformed for further calculations.
 
 The final results and as well as all intermediate results are saved. Those that can be used, for example, by shaper-py, analyzer-py or click-the-coast-js in the form of separate files (separate directory structure), part in the GeoPackage database.
 
@@ -177,7 +177,7 @@ will allow the bases and tops to be determined using method 1 instead of method 
 ./example_2011.sh --recount
 ```
 
-In a similar way, we can test the tools' actions on a second data set - we use the ```example_2017.sh``` script for this. Note that this time the points are determined using method 1.
+In a similar way, we can test the tools' actions on a second data set - we use the ```example_2017.sh``` script for this. Note that this time the points are determined using method 1. In both examples, the coordinate reference system used for calculations is EPSG:2180 (metric system).
 
 ## Notes
 
@@ -186,5 +186,5 @@ Most common problems:
 - no GDAL tool installed on the system,
 - different versions of the system GDAL tool and the GDAL package for Python,
 - incorrectly entered paths to data in configuration files,
-- incorrectly prepared shp with coastline (wrong direction),
-- incorrect datum.
+- incorrect datum (for example, input *.shp files with shoreline or trimming area do not have *.prj files or data in *.prj is incorrect).
+

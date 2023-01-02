@@ -79,7 +79,7 @@ def read_coastline(config):
     shapes = glob.glob(join(coastline_path, "*.shp"))
 
     if len(shapes) > 0:
-        line = gpd.read_file(shapes[0]).to_crs(config["shapes"]["coastline"]["crs"])
+        line = gpd.read_file(shapes[0]).to_crs(config["shapes"]["coastline"]["dst_crs"])
         line.to_file(
             join(base, config["paths"]["db"]),
             layer=config["db"]["layers"]["coastline"]["name"],
