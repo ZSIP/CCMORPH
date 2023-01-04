@@ -180,6 +180,30 @@ will allow the the bases and tops to be determined using method no. 1 instead of
 
 In a similar way, we can test the tools' actions on a second data set - we use the ```example_2017.sh``` script for this. Note that this time the points are determined using method no. 1. In both examples, the coordinate reference system used for calculations is EPSG:2180 (metric system).
 
+In order to test the operation of the **Click-The-Cost** application, example scripts have also been prepared. We will use the example example_2011 to explain how they work.
+
+- When the script ./example_2011.sh is executed, a data directory example_2011_data is created, which contains both the input data and the results of the generator-py, shaper-py and analyser-py programs. After reviewing the results of the analysis, we conclude that we would like to modify the position of the base and peak in the selected profiles ( point them out manually). We run the script ```./ctc-start.sh``` giving as argument the path to the data applications needed.  In our example this would be:
+
+    ```	
+    ./ctc-start.sh example_2011_data/output/web
+    ```
+
+    The script creates a Docker container with our application, copies the current data to it and makes it accessible at http://localhost:8082. Enter the address in the browser and use the application. Note that you need to install and run Docker to run the script correctly. The Internet must also be available while the script is running.
+- When the work is finished with the application, we need to download the data from the container to the local directory. We do this with the script ```./ctc-download.sh``` to which we pass as an argument the local path to which the results from the web application are to be copied. In our example:
+
+    ```
+    ./ctc-download.sh example_2011_data/output/web/results
+    ```
+
+- If we are not going to use the application, we can call the ```./ctc-finish.sh``` script, which will remove the container and image with our web application
+
+- Calling the analyser-py application again will recalculate the results taking into account the new data from the web application. In our example, we can use the command for this:
+
+    ```
+    ./example_2011.sh --analyse
+    ```
+
+
 ## Notes
 
 Most common problems are:
