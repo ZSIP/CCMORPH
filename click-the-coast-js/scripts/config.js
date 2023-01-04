@@ -1,13 +1,13 @@
 const config = {
     paths: {
         input: {
-            geojson: "data/output/web/geojson",
-            clip: "data/output/web/geotiff",
-            names: "data/output/web/names/names.json",
-            shaper: "data/output/web/results/shaper.csv",
+            geojson: "data/web/geojson",
+            clip: "data/web/geotiff",
+            names: "data/web/names/names.json",
+            shaper: "data/web/results/shaper.csv", // ignored
         },
         output: {
-            manual: "data/output/web/results/manual.csv"
+            manual: "data/web/results/manual.csv"
         }
     },
     csv: {

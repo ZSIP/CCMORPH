@@ -138,21 +138,41 @@ const initMap = function () {
 
 }
 
+const rangeToArray = function (rangeString) {
+    let s = new Set();
+    rangeString.replace(/\s/g, '').split(',').forEach(e => {
+        let i = e.match(/(^\d+$)/)
+        let r = e.match(/^(\d+)-(\d+)$/)
+        if(i != null) {
+            s.add(Number(i[0]))
+        } else if (r !== null) {
+            let start = Number(r[1]);
+            let end = Number(r[2]);
+            for (let number = start; number <= end; number++) {
+                s.add(number);
+            }
+        }
+    });
+    return [...s];
+}
+
 const getProfileNames = function () {
     let retVal = [];
     let csv = [];
     let isRandomChoice = $('#randomRadio').is(':checked');
-    let seriesSize = Number($('#seriesSize').val()) || 1;
-    let firstProfile = Number($('#firstProfile').val()) || 1;
+    // let seriesSize = Number($('#seriesSize').val()) || 1;
+    // let firstProfile = Number($('#firstProfile').val()) || 1;
+    let series = rangeToArray($('#firstProfile').val());
+    let re = /^(\d+)(_.*)/;
     // get full list of profiles
     $.get(`${config.paths.input.shaper}`)
         .done(data => {csv = $.csv.toObjects(data, {separator: config.csv.shaper.sep});})
         .always(() => {
             $.getJSON(`${config.paths.input.names}`, function(json){
                 let fullArray = json.names || [];
-                let re = /^(\d+)(_.*)/;
                 fullArray = fullArray.sort((a,b) => Number(re.exec(a)[1]) - Number(re.exec(b)[1]));
-                filteredArray = filterNamesByShaperResults(fullArray, csv);
+                // filteredArray = filterNamesByShaperResults(fullArray, csv);
+                filteredArray = fullArray; // temp: ignore existing marks, process all profiles
                 if(isRandomChoice) {
                     if(seriesSize >= filteredArray.length) {
                         retVal = filteredArray;
@@ -164,7 +184,15 @@ const getProfileNames = function () {
                         [...indexes].sort((a,b) => a-b).forEach(a => retVal.push(filteredArray[a]));
                     }
                 } else {
-                    retVal = filteredArray.slice(firstProfile - 1, firstProfile - 1 + seriesSize);
+                    // retVal = filteredArray.slice(firstProfile - 1, firstProfile - 1 + seriesSize);
+                    retVal = [];
+                    series.forEach(n => {
+                        let f = filteredArray.find(e => Number(e.match(re)[1]) == n);
+                        if (f) {
+                            retVal.push(f);
+                        }
+
+                    });
                 }
                 // remove .geojson extensions
                 state.data.tests = retVal.map(name => name.replace('.geojson', ''));
@@ -183,13 +211,16 @@ const showProfile = function (name) {
         resetMap();
         state.polygon = [];
         state.controlElevation.load(`${config.paths.input.geojson}/${name}.geojson`);
-        $.getJSON(`${config.paths.input.clip}/${name}_bbox.json`, function (json) {
-            state.bbox = json['bbox'];
-            // state.imageOverlay = L.imageOverlay(`${config.paths.clip}/${name}.tif`, state.bbox, config.image.options).addTo(state.map);
-            state.imageOverlay = true;
-            state.data.name = name;
-            state.data.profileId = name.match(/^(\d+)_/)[1];
-            setMapTitle(name);
+        $.getJSON(`${config.paths.input.geojson}/${name}.geojson`, function (json) {
+            state.firstPoint = json['properties']['firstPoint'];
+            $.getJSON(`${config.paths.input.clip}/${name}_bbox.json`, function (json) {
+                state.bbox = json['bbox'];
+                // state.imageOverlay = L.imageOverlay(`${config.paths.clip}/${name}.tif`, state.bbox, config.image.options).addTo(state.map);
+                state.imageOverlay = true;
+                state.data.name = name;
+                state.data.profileId = name.match(/^(\d+)_/)[1];
+                setMapTitle(name);
+            });
         });
     } else {
         testToEnd();
@@ -233,8 +264,8 @@ $(() => {
             xhr.open("POST", "./scripts/main.php", true);
             xhr.send(JSON.stringify({
                 profile_id: state.data.profileId,
-                top: state.profile[idx1] > state.profile[idx2] ? idx1 : idx2,
-                bottom: state.profile[idx1] > state.profile[idx2] ? idx2 : idx1,
+                top: (state.profile[idx1] > state.profile[idx2] ? idx1 : idx2) + state.firstPoint,
+                bottom: (state.profile[idx1] > state.profile[idx2] ? idx2 : idx1) + state.firstPoint,
                 email: state.data.email,
                 id: state.data.id,
                 file: `../${config.paths.output.manual}`,
@@ -248,8 +279,10 @@ $(() => {
     $('.form-check-input').change(function(){
         if(!$('#seriesRadio').is(':checked')) {
             $('#firstProfileForm').hide();
+            $('#seriezSizeForm').show();
         } else {
             $('#firstProfileForm').show();
+            $('#seriezSizeForm').hide();            
         }
     });
 });

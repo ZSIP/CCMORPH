@@ -64,23 +64,29 @@ for name in profile_files:
             tmp_points = profile_points[profile_points.method == method]
             if len(tmp_points):
                 correct_points = pd.concat([correct_points, tmp_points])
-                if method != 0: # 0 - manual
-                    break
+                # if method != 0: # 0 - manual
+                #     break
+                break
         method = -1
-        if len(correct_points):
-            correct_points = correct_points[correct_points.method == correct_points.iloc[0].method]
-            if len(correct_points) > 1:
-                m_top, m_bottom = correct_points.top.median(axis = 0), correct_points.bottom.median(axis = 0)
-                correct_points = correct_points[abs(correct_points.top - m_top) < config["max_error"]]
-                correct_points = correct_points[abs(correct_points.bottom - m_bottom) < config["max_error"]]
-                if len(correct_points):
-                    m_top, m_bottom = round(correct_points.top.median(axis = 0)), round(correct_points.bottom.median(axis = 0))
+
+        # todo: 
+        # if len(correct_points):
+        #     correct_points = correct_points[correct_points.method == correct_points.iloc[0].method]
+        #     if len(correct_points) > 1:
+        #         m_top, m_bottom = correct_points.top.median(axis = 0), correct_points.bottom.median(axis = 0)
+        #         correct_points = correct_points[abs(correct_points.top - m_top) < config["max_error"]]
+        #         correct_points = correct_points[abs(correct_points.bottom - m_bottom) < config["max_error"]]
+        #         if len(correct_points):
+        #             m_top, m_bottom = round(correct_points.top.median(axis = 0)), round(correct_points.bottom.median(axis = 0))
         
         if len(correct_points) == 0:
             continue
+        else:
+            top_id = int(correct_points.iloc[0].top)
+            bottom_id = int(correct_points.iloc[0].bottom)            
+        # top_id = m_top if len(correct_points) > 1 else int(correct_points.iloc[0].top)
+        # bottom_id = m_bottom if len(correct_points) > 1 else int(correct_points.iloc[0].bottom)
 
-        top_id = m_top if len(correct_points) > 1 else int(correct_points.iloc[0].top)
-        bottom_id = m_bottom if len(correct_points) > 1 else int(correct_points.iloc[0].bottom)
 
         bottom = csv[csv.no_point == bottom_id]
         top = csv[csv.no_point == top_id]

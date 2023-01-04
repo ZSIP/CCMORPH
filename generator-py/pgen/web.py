@@ -65,14 +65,19 @@ def export_geojson(cfg):
             filtered_profiles = cropped_profiles.query(
                 f"no_transect=={dem_idx} and dem=='{dem_name}.tif'"
             )
-            with open(join(geojson_path, f"{file_name}.geojson"), "w") as geojson_file:
-                geojson = deepcopy(geojson_template)
-                geojson["name"] = f"{file_name}.geojson"
-                for idx, row in filtered_profiles.iterrows():
-                    geojson["features"][0]["geometry"]["coordinates"].append(
-                        [row["x"], row["y"], row["elevation"]]
-                    )
-                json.dump(geojson, geojson_file)
+            geojson = deepcopy(geojson_template)
+            geojson["name"] = f"{file_name}.geojson"
+            if len(filtered_profiles) > 0:
+                geojson["properties"]["firstPoint"] = int(filtered_profiles.iloc[0].no_point)
+            # "geojson_template": "{'name': '','type': 'FeatureCollection','features': [{'type': 'Feature','geometry': {'type': 'LineString','coordinates':[]}}], 'properties': {'firstPoint': 0}}"
+                
+            for idx, row in filtered_profiles.iterrows():
+                geojson["features"][0]["geometry"]["coordinates"].append(
+                    [row["x"], row["y"], row["elevation"]]
+                )
+            if len(geojson['features'][0]['geometry']['coordinates']) > 0:
+                with open(join(geojson_path, f"{file_name}.geojson"), "w") as geojson_file:
+                    json.dump(geojson, geojson_file)
     except Exception as e:
         print("... export_geojson function error")
         raise e

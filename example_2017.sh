@@ -12,7 +12,7 @@ then
     exit
 fi
 
-if [ $# -ne 1 ] || [ "$1" != '--recount' ]
+if [ "$1" != '--recount' ] && [ "$1" != '--analyse' ]
 then
     echo -e "$YELLOW---> Example 2017: prepare input data$OFF"
     unzip -o example_2017_data.zip
@@ -21,8 +21,23 @@ then
     mv example_2017_data/shaper-py.config.json shaper-py/config.json
     mv example_2017_data/analyzer-py.config.json analyzer-py/config.json
 fi
-echo -e "$YELLOW---> Example 2017: run generator-py$OFF"; cd generator-py; python3 main.py &&
-( echo -e "$YELLOW---> Example 2017: run shaper-py$OFF"; cd ../shaper-py; python3 main.py &&
-( echo -e "$YELLOW---> Example 2017: run analyzer-py$OFF"; cd ../analyzer-py; python3 main.py ) )
+if [ "$1" != '--analyse' ]
+then
+    echo -e "$YELLOW---> Example 2017: run generator-py$OFF"; cd generator-py; python3 main.py
+fi
+
+if [ $? -eq 0 ] && [ "$1" != '--analyse' ]
+then
+    echo -e "$YELLOW---> Example 2017: run shaper-py$OFF"; cd ../shaper-py; python3 main.py
+fi
+
+if [ $? -eq 0 ]
+then
+    if [ "$base" != `pwd` ]
+    then
+        cd ..
+    fi
+    echo -e "$YELLOW---> Example 2017: run analyzer-py$OFF"; cd analyzer-py; python3 main.py
+fi
 
 cd $base

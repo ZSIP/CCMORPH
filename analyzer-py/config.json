@@ -1,11 +1,11 @@
 {
     "paths": {
         "input": {
-            "profiles": "../example_2017_data/output/profiles/cropped",
-            "points": "../example_2017_data/output/web/results"
+            "profiles": "../example_2011_data/output/profiles/cropped",
+            "points": "../example_2011_data/output/web/results"
         },
         "output": {
-            "finall": "../example_2017_data/output/finall"
+            "finall": "../example_2011_data/output/finall"
         }
     },
     "csv": {
@@ -13,12 +13,12 @@
             "sep": ","
         },
         "points": {
-            "first": "shaper_method_1.csv",
+            "first": "shaper_method_2.csv",
             "colnames": ["profile_id", "method", "smooth", "bottom", "top", "id", "email"],
             "sep": ","            
         },
         "output": {
-            "first": "measurement_method_1.csv",
+            "first": "measurement_metyhod_2.csv",
             "sep": ","
         }
     },
@@ -26,6 +26,6 @@
         "crs": "epsg:2180"
     },
     "selected_profiles": [],
-    "methods_order": [1, 2, 0],
+    "methods_order": [0, 1, 2],
     "max_error": 3
 }

@@ -1,6 +1,6 @@
 {
     "paths": {
-        "base": "../example_2017_data",
+        "base": "../example_2011_data",
         "input": {
             "coastline": "input/coast",
             "dem": "input/dem",
@@ -86,6 +86,6 @@
 
     "export": {
         "crs": "epsg:4326",
-        "geojson_template": "{'name': '','type': 'FeatureCollection','features': [{'type': 'Feature','geometry': {'type': 'LineString','coordinates':[]}}]}"
+        "geojson_template": "{'name': '','type': 'FeatureCollection','features': [{'type': 'Feature','geometry': {'type': 'LineString','coordinates':[]}}], 'properties': {'firstPoint': 0}}"
     }
 }
