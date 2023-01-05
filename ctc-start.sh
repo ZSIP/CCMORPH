@@ -32,7 +32,7 @@ docker image inspect "$APP" >/dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo -e "$YELLOW---> Build the docker $APP image $OFF"
-    echo "FROM php:7.2-apache \nCOPY click-the-coast-js/ /var/www/html/" > Dockerfile
+    echo -e "FROM php:7.2-apache \nCOPY click-the-coast-js/ /var/www/html/" > Dockerfile
     docker build . -t "$APP" # build image
     rm -f Dockerfile
 fi
