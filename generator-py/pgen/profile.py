@@ -58,6 +58,7 @@ def generate_profiles(cfg):
                     slope_raster = gdal.Open(slope_file)
                     height_array = height_raster.GetRasterBand(1).ReadAsArray()
                     slope_array = slope_raster.GetRasterBand(1).ReadAsArray()
+                    height_nodata = height_raster.GetRasterBand(1).GetNoDataValue()
 
                     env = height_raster.GetGeoTransform()
                     x_origin = env[0]
@@ -85,8 +86,7 @@ def generate_profiles(cfg):
                         xg.append(float(x_geo))
                         yg.append(float(y_geo))
                         current_dist += height_resolution
-                    elevation = list(map(lambda i: 0 if i == -9999 else i, elevation))
-
+                    elevation = list(map(lambda i: 0 if i == height_nodata else i, elevation))
                     # profile = profile.assign(nb=transect_idx, indx=df.index)
                     profile = pd.DataFrame(
                         {

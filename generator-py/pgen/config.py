@@ -17,6 +17,7 @@ def _get_DEM(cfg):
         cfg["dem"]["resolution"],  # resolution
         cfg["dem"]["src_crs"],  # src_crs
         cfg["dem"]["dst_crs"],  # dst_crs
+        cfg["dem"]["buffer_width"],  # buffer_width
         cfg["transect"]["length"],  # transect_length
     )
 

@@ -1,5 +1,6 @@
 import math
 import pandas as pd
+import numpy as np
 
 def get_profile_section_len(profile):
     return round(
@@ -46,10 +47,10 @@ def method_2(profile, begin_no, end_no, min_profile_points=20):
                 / (a ** 2 + 1) ** (0.5)
             )
 
-        D_min = min(D)
-        D_max = max(D)
-        retVal["top"] = begin_no + D.index(D_max)
-        retVal["bottom"] = begin_no + D.index(D_min)
+        D_min_index = np.array(D).argmin()
+        retVal["bottom"] = begin_no + D_min_index
+        D_max_index = np.array(D[D_min_index:]).argmax() + D_min_index
+        retVal["top"] = begin_no + D_max_index        
     else:
         set_status(
             retVal,

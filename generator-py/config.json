@@ -77,7 +77,8 @@
     "dem": {
         "resolution": 16,
         "src_crs": "epsg:2180",
-        "dst_crs": "epsg:2180"
+        "dst_crs": "epsg:2180",
+        "buffer_width": 5
     },
 
     "profile": {

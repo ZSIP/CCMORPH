@@ -17,8 +17,8 @@ def generate_transects(cfg, show_progress=True):
     ) = config.parse(cfg, generate_transects.__name__)
 
     try:
-        # enerate points on the line (new layer of points in the base, fixed distances between points)
-        repeat = line_to_points(
+        # generate points on the line (new layer of points in the base, fixed distances between points)
+        points_no = line_to_points(
             db,
             line_layer["name"],
             points_layer["name"],
@@ -31,12 +31,12 @@ def generate_transects(cfg, show_progress=True):
         transects_tmp = pd.DataFrame()
 
         i = 0
-        while i < int(repeat + 1):
+        while i < points_no:
             distance = points.loc[i]["distance"]
             pt1 = points.iloc[[i - 1]]
             pt1x, pt1y = pt1.centroid.x, pt1.centroid.y
 
-            if i == int(repeat):
+            if i == points_no - 1:
                 pt2 = points.iloc[[i]]
             else:
                 pt2 = points.iloc[[i + 1]]
@@ -107,7 +107,7 @@ def line_to_points(db, line_layer_name, points_layer_name, points_layer_crs, ste
                 }
             )
         output.close()
-    return geometry.length / step
+    return i + 1 # geometry.length / step
 
 
 def get_angle(pt1x, pt1y, pt2x, pt2y):
