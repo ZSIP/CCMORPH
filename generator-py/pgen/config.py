@@ -14,7 +14,6 @@ def _get_DEM(cfg):
         join(base_path, cfg["paths"]["db"]),  # db
         cfg["db"]["layers"]["transects"],  # transects_layer
         cfg["db"]["layers"]["buffers"],  # buffers_layer
-        cfg["dem"]["resolution"],  # resolution
         cfg["dem"]["src_crs"],  # src_crs
         cfg["dem"]["dst_crs"],  # dst_crs
         cfg["profile"]["distance"],  # buffer_width == profile_distance

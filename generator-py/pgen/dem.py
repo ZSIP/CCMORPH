@@ -13,7 +13,6 @@ def get_DEM(cfg):
         db,
         transects_layer,
         buffers_layer,
-        resolution,
         src_crs,
         dst_crs,
         buffer_width,
@@ -25,7 +24,7 @@ def get_DEM(cfg):
         transects = gpd.read_file(db, layer=transects_layer["name"]).to_crs(
             transects_layer["crs"]
         )        
-        buffers = transects.buffer(buffer_width, resolution=resolution)
+        buffers = transects.buffer(buffer_width)
         buffers.to_file(db, layer=buffers_layer["name"], driver="GPKG")
         buffers_count = len(buffers.index)
 
