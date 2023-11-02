@@ -16,7 +16,7 @@ def _get_DEM(cfg):
         cfg["db"]["layers"]["buffers"],  # buffers_layer
         cfg["dem"]["src_crs"],  # src_crs
         cfg["dem"]["dst_crs"],  # dst_crs
-        cfg["profile"]["distance"],  # buffer_width == profile_distance
+        cfg["transect"]["distance"],  # buffer_width == transect_distance
     )
 
 
