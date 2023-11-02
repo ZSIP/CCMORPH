@@ -17,7 +17,6 @@ def get_DEM(cfg):
         src_crs,
         dst_crs,
         buffer_width,
-        transect_length,
     ) = config.parse(cfg, get_DEM.__name__)
 
     try:
