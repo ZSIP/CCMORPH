@@ -43,7 +43,7 @@ def _generate_profiles(cfg):
         join(base_path, cfg["paths"]["db"]),  # db
         cfg["db"]["layers"]["profiles"],  # profiles_layer
         cfg["db"]["layers"]["transects"],  # transects_layer
-        cfg["profile"]["height_resolution"],  # height_resolution
+        cfg["profile"]["resolution"],  # resolution
         cfg["csv"]["profile_whole"],  # profile_csv
     )
 

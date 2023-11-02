@@ -25,7 +25,7 @@ def generate_profiles(cfg):
         db,
         profiles_layer,
         transects_layer,
-        height_resolution,
+        resolution,
         profile_csv,
     ) = config.parse(cfg, generate_profiles.__name__)
 
@@ -85,7 +85,7 @@ def generate_profiles(cfg):
                         y.append(int(col))
                         xg.append(float(x_geo))
                         yg.append(float(y_geo))
-                        current_dist += height_resolution
+                        current_dist += resolution
                     elevation = list(map(lambda i: 0 if i == height_nodata else i, elevation))
                     # profile = profile.assign(nb=transect_idx, indx=df.index)
                     profile = pd.DataFrame(
