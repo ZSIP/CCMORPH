@@ -1,8 +1,10 @@
 **/.DS_Store
 **/env/
 **/__pycache__
+**/.ipynb_checkpoints
 
 data.big
 .draw-ipynb
 .vscode
 __MACOSX
+

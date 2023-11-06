@@ -1,0 +1,30 @@
+{
+    "paths": {
+        "base": "../../example_2017_data",
+        "input": {
+            "profiles": "output/generator/profiles/cropped"
+        },
+        "output": {
+            "results": ["output/finder/finder_method_1.csv", "output/web/results/finder_method_1.csv"]
+        }
+    },
+    "csv": {
+        "profiles": {
+            "sep": ","
+        },
+        "output": {
+            "sep": ","
+        }
+    },
+    "smoothness": {
+        "profile": false,
+        "bottom": false,
+        "top": false
+    },
+    "selected_profiles": [],
+    "min_profile_points": 10,
+    "elevation_zero": 0,
+    "elevation_threshold": 3,
+    "method": 2,
+    "max_error": 3
+}

@@ -17,18 +17,18 @@ then
     echo -e "$YELLOW---> Example 2017: prepare input data$OFF"
     unzip -o example_2017_data.zip
     echo -e "$YELLOW---> Example 2017: prepare configs$OFF"
-    mv example_2017_data/generator-py.config.json generator-py/config.json
-    mv example_2017_data/shaper-py.config.json shaper-py/config.json
-    mv example_2017_data/analyzer-py.config.json analyzer-py/config.json
+    mv example_2017_data/generator-py.config.json tools/generator-py/config.json
+    mv example_2017_data/finder-py.config.json tools/finder-py/config.json
+    mv example_2017_data/analyzer-py.config.json tools/analyzer-py/config.json
 fi
 if [ "$1" != '--analyse' ]
 then
-    echo -e "$YELLOW---> Example 2017: run generator-py$OFF"; cd generator-py; python3 main.py
+    echo -e "$YELLOW---> Example 2017: run generator-py$OFF"; cd tools/generator-py; python3 main.py
 fi
 
 if [ $? -eq 0 ] && [ "$1" != '--analyse' ]
 then
-    echo -e "$YELLOW---> Example 2017: run shaper-py$OFF"; cd ../shaper-py; python3 main.py
+    echo -e "$YELLOW---> Example 2017: run finder-py$OFF"; cd ../finder-py; python3 main.py
 fi
 
 if [ $? -eq 0 ]
