@@ -5,11 +5,10 @@ import glob
 from natsort import natsorted
 import pandas as pd
 import numpy as np
-from os.path import join, isdir, basename
-from os import mkdir, remove
+from os.path import join, basename
 from halo import Halo as spiner
 
-from finder import smooth_profile, smooth_points, get_main_points, get_zero_points
+from finder import smooth_profile, get_main_points, get_zero_points
 
 pd.options.mode.chained_assignment = None
 
@@ -17,8 +16,10 @@ try:
     # get config
     with open("config.json", "r") as jsonfile:
         config = json.load(jsonfile)
-    
-    profile_input_path = join(config["paths"]["base"], config["paths"]["input"]["profiles"])
+
+    profile_input_path = join(
+        config["paths"]["base"], config["paths"]["input"]["profiles"]
+    )
 
     csv_profiles = config["csv"]["profiles"]
     method = config["method"]
@@ -31,16 +32,19 @@ try:
     results = []
 
     # list profile files
-    profile_files = natsorted(glob.glob(f'{profile_input_path}/*.csv'))
+    profile_files = natsorted(glob.glob(f"{profile_input_path}/*.csv"))
     profile_files_count = len(profile_files)
     counter = 0
 
     # loop through the profiles folder
     print("... looking for the base and top of profiles ")
     for name in profile_files:
-        with spiner(text=f"{counter} / {profile_files_count} -> {basename(name)}", spinner="dots"):
+        with spiner(
+            text=f"{counter} / {profile_files_count} -> {basename(name)}",
+            spinner="dots",
+        ):
             counter += 1
-            
+
             # get profile number from file name
             profile_id = int(re.findall("\d{1,4}", basename(name))[0])
 
@@ -59,18 +63,24 @@ try:
             if len(cut) == 0:
                 continue
             first_no = cut.iloc[0]["no_point"].astype(int).item()
-            # last_no = cut.iloc[-1]["no_point"]
 
-            # prevent moving over the top
-            last_no = cut.elevation.idxmax().astype(int).item()
+            # prevent moving to far over the top (points buffer)
+            buffer = config["beyond_top_buffer"] if method == 2 else 0
+            highest_point = cut.elevation.idxmax().astype(int).item() + buffer
+            last_point = cut["no_point"].iloc[-1]
+            last_no = last_point if highest_point > last_point else highest_point
 
             # find zero points
             zero_result = get_zero_points(
-                csv, first_no, last_no, elevation_zero, min_profile_points=config["min_profile_points"]
+                csv,
+                first_no,
+                last_no,
+                elevation_zero,
+                min_profile_points=config["min_profile_points"],
             )
             if first_no < zero_result["last"]:
                 first_no = zero_result["last"]
-            
+
             # find base and top points
             if config["smoothness"]["profile"]:
                 smooth = smooth_profile(csv, first_no, last_no)
@@ -79,19 +89,13 @@ try:
                 else:
                     continue
 
-            if method == 1:
+            if method == 2:
                 result = get_main_points(
                     csv,
                     first_no,
                     last_no,
-                    method=1,
-                    profile_id=profile_id,
+                    method=2,
                     min_profile_points=config["min_profile_points"],
-                    elevation_threshold=config["elevation_threshold"]
-                )
-            else:
-                result = get_main_points(
-                    csv, first_no, last_no, method=2, min_profile_points=config["min_profile_points"]
                 )
 
             results.append(
@@ -99,28 +103,14 @@ try:
                     "profile_id": profile_id,
                     "method": method,
                     "profile_smooth": config["smoothness"]["profile"],
-                    "bottom_smooth": config["smoothness"]["bottom"],
-                    "top_smooth": config["smoothness"]["top"],
-                    "first_zero": zero_result["first"], 
+                    "first_zero": zero_result["first"],
                     "last_zero": zero_result["last"],
-                    "bottom": result["bottom"],                
+                    "bottom": result["bottom"],
                     "top": result["top"],
                 }
             )
 
     results = pd.DataFrame(results)
-
-    # # smooth top points curve
-    # if config["smoothness"]["top"]:
-    #     smooth = smooth_points(results.top)
-    #     if type(smooth) != type(None):
-    #         results.top = np.array(smooth)
-
-    # # smooth bottom points curve
-    # if config["smoothness"]["bottom"]:
-    #     smooth = smooth_points(results.bottom)
-    #     if type(smooth) != type(None):
-    #         results.bottom = np.array(smooth)
 
     # export results to CSV file/files (all profiles together)
     print("... exporting CSV data")
@@ -129,7 +119,7 @@ try:
     for file in files:
         file = join(config["paths"]["base"], file)
         results.to_csv(
-            file, sep=config["csv"]["output"]["sep"], index=False, encoding='utf-8'
+            file, sep=config["csv"]["output"]["sep"], index=False, encoding="utf-8"
         )
     sys.exit(0)
 
