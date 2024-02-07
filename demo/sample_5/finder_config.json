@@ -1,0 +1,30 @@
+{
+    "paths": {
+        "base": "../../demo/sample_5",
+        "input": {
+            "profiles": "output/generator/profiles/cropped"
+        },
+        "output": {
+            "results": [
+                "output/finder/finder.csv",
+                "output/web/results/finder.csv"
+            ]
+        }
+    },
+    "csv": {
+        "profiles": {
+            "sep": ","
+        },
+        "output": {
+            "sep": ","
+        }
+    },
+    "smoothness": {
+        "profile": false
+    },
+    "selected_profiles": [],
+    "min_profile_points": 10,
+    "beyond_top_buffer": 10,
+    "elevation_zero": 0.5,
+    "method": 2
+}

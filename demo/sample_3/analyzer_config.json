@@ -1,0 +1,46 @@
+{
+    "paths": {
+        "base": "../../demo/sample_3",
+        "input": {
+            "profiles": "output/generator/profiles/cropped",
+            "points": "output/web/results"
+        },
+        "output": {
+            "finall": "output/analyser",
+            "shapes": "output/analyser/shapes"
+        },
+        "db": "db/database.gpkg"
+    },
+    "csv": {
+        "profiles": {
+            "sep": ","
+        },
+        "points": {
+            "first": "finder.csv",
+            "colnames": [
+                "profile_id",
+                "method",
+                "smooth",
+                "bottom",
+                "top",
+                "id",
+                "email"
+            ],
+            "sep": ","
+        },
+        "output": {
+            "first": "measurement.csv",
+            "sep": ","
+        }
+    },
+    "shape": {
+        "crs": "epsg:2180"
+    },
+    "selected_profiles": [],
+    "methods_order": [
+        0,
+        2,
+        1
+    ],
+    "max_error": 3
+}

@@ -1,0 +1,83 @@
+{
+    "paths": {
+        "base": "../../demo/sample_3",
+        "input": {
+            "coastline": "input/coast",
+            "dem": "input/dem",
+            "crop": "input/crop",
+            "web_crop": "input/crop"
+        },
+        "output": {
+            "profiles_whole": "output/generator/profiles/whole",
+            "profiles_cropped": "output/generator/profiles/cropped",
+            "dem_cropped": "output/generator/dem/cropped",
+            "dem_slope": "output/generator/dem/slope",
+            "web_geotiff": "output/web/geotiff",
+            "web_geojson": "output/web/geojson",
+            "web_names": "output/web/names",
+            "web_results": "output/web/results",
+            "results": "output/finder",
+            "finall": "output/analyser"
+        },
+        "db": "db/database.gpkg"
+    },
+    "db": {
+        "layers": {
+            "coastline": {
+                "name": "line_source",
+                "crs": "epsg:2180"
+            },
+            "points": {
+                "name": "points",
+                "crs": "epsg:2180"
+            },
+            "transects": {
+                "name": "transects",
+                "crs": "epsg:2180"
+            },
+            "buffers": {
+                "name": "bufer",
+                "crs": "epsg:2180"
+            },
+            "profiles": {
+                "name": "profiles",
+                "crs": "epsg:2180"
+            }
+        }
+    },
+    "csv": {
+        "profile_whole": {
+            "sep": ",",
+            "encoding": "utf-8-sig",
+            "crs": "epsg:2180"
+        },
+        "profile_cropped": {
+            "sep": ",",
+            "encoding": "utf-8-sig",
+            "crs": "epsg:4326"
+        }
+    },
+    "shapes": {
+        "coastline": {
+            "dst_crs": "epsg:2180"
+        },
+        "buffer": {
+            "dst_crs": "epsg:2180"
+        }
+    },
+    "transect": {
+        "distance": 10,
+        "length": 300
+    },
+    "dem": {
+        "src_crs": "epsg:2180",
+        "dst_crs": "epsg:2180"
+    },
+    "profile": {
+        "resolution": 1
+    },
+    "export": {
+        "crs": "epsg:4326",
+        "geojson_template": "{'name': '','type': 'FeatureCollection','features': [{'type': 'Feature','geometry': {'type': 'LineString','coordinates':[]}}], 'properties': {'firstPoint': 0}}"
+    }
+}
