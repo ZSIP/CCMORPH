@@ -14,13 +14,13 @@ echo "GDAL==$GV" | cat requirements - > requirements.txt
 pip install -r requirements.txt
 
 echo -e "$YELLOW---> Prepare demo data$OFF"
-cat demo/sample_1/input/dem/sample_1.tif_* > demo/sample_1/input/dem/sample_1.tif
-cat demo/sample_2/input/dem/sample_2.tif_* > demo/sample_2/input/dem/sample_2.tif
-cat demo/sample_3/input/dem/sample_3.tif_* > demo/sample_3/input/dem/sample_3.tif
-cat demo/sample_4/input/dem/sample_4.tif_* > demo/sample_4/input/dem/sample_4.tif
-cat demo/sample_5/input/dem/sample_5.tif_* > demo/sample_5/input/dem/sample_5.tif
-rm demo/sample_1/input/dem/sample_1.tif_*
-rm demo/sample_2/input/dem/sample_1.tif_*
-rm demo/sample_3/input/dem/sample_1.tif_*
-rm demo/sample_4/input/dem/sample_1.tif_*
-rm demo/sample_5/input/dem/sample_1.tif_*
+cat demo/sample_1/input/dem/sample_1.tif_* > demo/sample_1/input/dem/sample_1.tif 2> /dev/null
+cat demo/sample_2/input/dem/sample_2.tif_* > demo/sample_2/input/dem/sample_2.tif 2> /dev/null
+cat demo/sample_3/input/dem/sample_3.tif_* > demo/sample_3/input/dem/sample_3.tif 2> /dev/null
+cat demo/sample_4/input/dem/sample_4.tif_* > demo/sample_4/input/dem/sample_4.tif 2> /dev/null
+cat demo/sample_5/input/dem/sample_5.tif_* > demo/sample_5/input/dem/sample_5.tif 2> /dev/null
+rm demo/sample_1/input/dem/sample_1.tif_* 2> /dev/null
+rm demo/sample_2/input/dem/sample_2.tif_* 2> /dev/null
+rm demo/sample_3/input/dem/sample_3.tif_* 2> /dev/null
+rm demo/sample_4/input/dem/sample_4.tif_* 2> /dev/null
+rm demo/sample_5/input/dem/sample_5.tif_* 2> /dev/null
