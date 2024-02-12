@@ -210,7 +210,7 @@ In order to test the operation of the ```Click-The-Coast``` application, example
     ./ctc-start.sh demo/sample_5/output/web
     ```
 
-- The script creates a Docker container with our application, copies the current data to it and makes it accessible at ```http://localhost:8082```. Enter the address in the browser and use the application. Note that you need to install and run Docker to run the script correctly. The Internet must also be available while the script is running.
+    The script creates a Docker container with our application, copies the current data to it and makes it accessible at ```http://localhost:8082```. Enter the address in the browser and use the application. Note that you need to install and run Docker to run the script correctly. The Internet must also be available while the script is running.
 
 - When the work is finished with the application, we need to download the data from the container to the local directory. We do this with the script ```./ctc-download.sh``` to which we pass as an argument the local path to which the results from the web application are to be copied. In our example:
 
