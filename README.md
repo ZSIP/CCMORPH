@@ -195,17 +195,17 @@ to:
 it will result in transects being generated every 300 metres rather than 200 metres.
 Once all the data have been correctly recalculated, we can use the tool for further analysis, namely ```figures_compared.ipynb```, ```dem_compared.ipynb``` or ```csv_compared.ipynb```, among others. The paths in these programs are set by default to the data in the demo directory, i.e. comparing the results of all 5 data sets (```sample_1```, ```sample_2```, etc.).
 In order to test the operation of the ```Click-The-Coast``` application, example scripts have also been prepared. We will use the example ```demo/sample_5``` to explain how they work.
-•	When the script ```./run_demo.sh``` is executed, a data directories (```demo/sample_1```, ```demo/sample_2```, …, ```demo/sample_5```) will contain both the input data and the results of the ```generator-py```, ```finder-py``` and ```analyser-py``` programs. After reviewing the results of the analysis, we conclude that we would like to modify the position of the base and top in the selected profiles  point them out manually). We run the script ```./ctc-start.sh``` giving as argument the path to the data applications needed. In our example this would be:
+- When the script ```./run_demo.sh``` is executed, a data directories (```demo/sample_1```, ```demo/sample_2```, …, ```demo/sample_5```) will contain both the input data and the results of the ```generator-py```, ```finder-py``` and ```analyser-py``` programs. After reviewing the results of the analysis, we conclude that we would like to modify the position of the base and top in the selected profiles  point them out manually). We run the script ```./ctc-start.sh``` giving as argument the path to the data applications needed. In our example this would be:
 ```
 ./ctc-start.sh demo/sample_5/output/web
 ```
 The script creates a Docker container with our application, copies the current data to it and makes it accessible at ```http://localhost:8082```. Enter the address in the browser and use the application. Note that you need to install and run Docker to run the script correctly. The Internet must also be available while the script is running.
-•	When the work is finished with the application, we need to download the data from the container to the local directory. We do this with the script ```./ctc-download.sh``` to which we pass as an argument the local path to which the results from the web application are to be copied. In our example:
+- When the work is finished with the application, we need to download the data from the container to the local directory. We do this with the script ```./ctc-download.sh``` to which we pass as an argument the local path to which the results from the web application are to be copied. In our example:
 ```
 ./ctc-download.sh demo/sample_5/output/web/results
 ```
-•	If we are not going to use the application, we can call the ```./ctc-finish.sh``` script, which will remove the container and image with our web application
-•	Calling the ```analyser-py``` application again will recalculate the results taking into account the new data from the web application.
+- If we are not going to use the application, we can call the ```./ctc-finish.sh``` script, which will remove the container and image with our web application
+- Calling the ```analyser-py``` application again will recalculate the results taking into account the new data from the web application.
 
 
 ## Notes
