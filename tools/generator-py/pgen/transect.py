@@ -17,6 +17,16 @@ def generate_transects(cfg, show_progress=True):
     ) = config.parse(cfg, generate_transects.__name__)
 
     try:
+        if not should_generate_transects(db, transects_layer):
+            print("... transects already loaded from SHP file")
+            points_no = update_points(
+                db,
+                line_layer,
+                points_layer,
+                transects_layer,
+            )
+            return
+
         # generate points on the line (new layer of points in the base, fixed distances between points)
         points_no = line_to_points(
             db,
@@ -47,10 +57,18 @@ def generate_transects(cfg, show_progress=True):
 
             if i == 0:
                 angle = get_angle(
-                    float(pt_mid_x.iloc[0]), float(pt_mid_y.iloc[0]), float(pt2x.iloc[0]), float(pt2y.iloc[0])
+                    float(pt_mid_x.iloc[0]),
+                    float(pt_mid_y.iloc[0]),
+                    float(pt2x.iloc[0]),
+                    float(pt2y.iloc[0]),
                 )
             else:
-                angle = get_angle(float(pt1x.iloc[0]), float(pt1y.iloc[0]), float(pt2x.iloc[0]), float(pt2y.iloc[0]))
+                angle = get_angle(
+                    float(pt1x.iloc[0]),
+                    float(pt1y.iloc[0]),
+                    float(pt2x.iloc[0]),
+                    float(pt2y.iloc[0]),
+                )
 
             start = get_point(pt_mid_x, pt_mid_y, angle, -transect_length / 2)
             end = get_point(start.centroid.x, start.centroid.y, angle, transect_length)
@@ -77,6 +95,33 @@ def generate_transects(cfg, show_progress=True):
     except Exception as e:
         print("... generate_transects function error")
         raise e
+
+
+def should_generate_transects(db, transects_layer):
+    ret_val = True
+    try:
+        transects = gpd.read_file(db, layer=transects_layer["name"])
+        if len(transects) > 0:
+            ret_val = False
+    except:
+        pass
+
+    return ret_val
+
+
+def update_points(db, line_layer, points_layer, transects_layer):
+    transects = gpd.read_file(db, layer=transects_layer["name"])
+    line = gpd.read_file(db, layer=line_layer["name"])
+
+    points = transects.geometry.map(lambda t: t.intersection(line.geometry.iloc[0]))
+    found_intersection = ~points.is_empty
+    points = gpd.GeoDataFrame(
+        points[found_intersection], crs=points_layer["crs"], geometry="geometry"
+    )
+    points.to_file(db, layer=points_layer["name"], driver="GPKG")
+
+    transects = transects[found_intersection]
+    transects.to_file(db, layer=transects_layer["name"], driver="GPKG")
 
 
 def line_to_points(db, line_layer_name, points_layer_name, points_layer_crs, step):
@@ -107,7 +152,7 @@ def line_to_points(db, line_layer_name, points_layer_name, points_layer_crs, ste
                 }
             )
         output.close()
-    return i + 1 # geometry.length / step
+    return i + 1  # geometry.length / step
 
 
 def get_angle(pt1x, pt1y, pt2x, pt2y):

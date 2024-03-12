@@ -1,6 +1,6 @@
 {
     "paths": {
-        "base": "../../example_2017_data",        
+        "base": "../../demo/sample_2",
         "input": {
             "profiles": "output/generator/profiles/cropped",
             "points": "output/web/results"
@@ -16,12 +16,20 @@
             "sep": ","
         },
         "points": {
-            "first": "finder_method_1.csv",
-            "colnames": ["profile_id", "method", "smooth", "bottom", "top", "id", "email"],
-            "sep": ","            
+            "first": "finder.csv",
+            "colnames": [
+                "profile_id",
+                "method",
+                "smooth",
+                "bottom",
+                "top",
+                "id",
+                "email"
+            ],
+            "sep": ","
         },
         "output": {
-            "first": "measurement_method_1.csv",
+            "first": "measurement.csv",
             "sep": ","
         }
     },
@@ -29,6 +37,10 @@
         "crs": "epsg:2180"
     },
     "selected_profiles": [],
-    "methods_order": [0, 2, 1],
+    "methods_order": [
+        0,
+        2,
+        1
+    ],
     "max_error": 3
 }

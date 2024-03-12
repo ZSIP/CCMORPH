@@ -5,7 +5,8 @@
             "coastline": "input/coast",
             "dem": "input/dem",
             "crop": "input/crop",
-            "web_crop": "input/crop"
+            "web_crop": "input/crop",
+            "transects": "input/transects"
         },
         "output": {
             "profiles_whole": "output/generator/profiles/whole",
@@ -62,7 +63,8 @@
             "dst_crs": "epsg:2180"
         },
         "buffer": {
-            "dst_crs": "epsg:2180"
+            "dst_crs": "epsg:2180",
+            "width": 10
         }
     },
     "transect": {

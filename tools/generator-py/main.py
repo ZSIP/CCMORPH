@@ -18,7 +18,7 @@ try:
     print("... initializing data structures")
     pgen.init(config)
 
-    # generate transects
+    # generate or load transects
     print("... generating transects")
     pgen.generate_transects(config)
 
@@ -31,7 +31,7 @@ try:
     pgen.generate_profiles(config)
 
     # crop profiles
-    print(f"... cropping profiles")
+    print("... cropping profiles")
     pgen.crop_profiles(config)
 
     # export data for a web tool

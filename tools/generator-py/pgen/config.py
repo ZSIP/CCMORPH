@@ -16,7 +16,21 @@ def _get_DEM(cfg):
         cfg["db"]["layers"]["buffers"],  # buffers_layer
         cfg["dem"]["src_crs"],  # src_crs
         cfg["dem"]["dst_crs"],  # dst_crs
-        cfg["transect"]["distance"] / 2,  # buffer_width == transect_distance / 2
+        (
+            cfg["shapes"]["buffer"]["width"]
+            if "width" in cfg["shapes"]["buffer"]
+            else cfg["transect"]["distance"] / 2
+        ),  # buffer_width == transect_distance / 2
+    )
+
+
+def _load_transects(cfg):
+    return (
+        join(cfg["paths"]["base"], cfg["paths"]["db"]),  # db
+        cfg["db"]["layers"]["coastline"],  # line_layer
+        cfg["db"]["layers"]["points"],  # points_layer
+        cfg["db"]["layers"]["transects"],  # transects_layer
+        cfg["transect"],  # transect_cfg
     )
 
 

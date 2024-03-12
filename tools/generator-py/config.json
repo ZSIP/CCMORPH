@@ -1,11 +1,12 @@
 {
     "paths": {
-        "base": "../../example_2017_data",
+        "base": "../../demo/sample_2",
         "input": {
             "coastline": "input/coast",
             "dem": "input/dem",
             "crop": "input/crop",
-            "web_crop": "input/crop"
+            "web_crop": "input/crop",
+            "transects": "input/transects"
         },
         "output": {
             "profiles_whole": "output/generator/profiles/whole",
@@ -21,7 +22,6 @@
         },
         "db": "db/database.gpkg"
     },
-
     "db": {
         "layers": {
             "coastline": {
@@ -42,11 +42,10 @@
             },
             "profiles": {
                 "name": "profiles",
-                "crs": "epsg:2180"                
-            }          
+                "crs": "epsg:2180"
+            }
         }
     },
-
     "csv": {
         "profile_whole": {
             "sep": ",",
@@ -57,32 +56,31 @@
             "sep": ",",
             "encoding": "utf-8-sig",
             "crs": "epsg:4326"
-        }        
+        }
     },
-
     "shapes": {
+        "transects": {
+            "dst_crs": "epsg:2180"
+        },
         "coastline": {
             "dst_crs": "epsg:2180"
         },
         "buffer": {
-            "dst_crs": "epsg:2180"
+            "dst_crs": "epsg:2180",
+            "width": 8
         }
     },
-    
     "transect": {
         "distance": 10,
-        "length": 200
+        "length": 300
     },
-
     "dem": {
         "src_crs": "epsg:2180",
         "dst_crs": "epsg:2180"
     },
-
     "profile": {
         "resolution": 1
     },
-
     "export": {
         "crs": "epsg:4326",
         "geojson_template": "{'name': '','type': 'FeatureCollection','features': [{'type': 'Feature','geometry': {'type': 'LineString','coordinates':[]}}], 'properties': {'firstPoint': 0}}"

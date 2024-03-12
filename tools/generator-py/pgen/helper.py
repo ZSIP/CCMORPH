@@ -8,6 +8,8 @@ from os import makedirs, remove
 def init(config):
     check_paths(config["paths"])
     read_coastline(config)
+    read_transects(config)
+    ret_val = True
 
 
 def check_paths(config_paths):
@@ -87,3 +89,33 @@ def read_coastline(config):
         )
     else:
         raise Exception(f"... cannot find any coastline SHP file ({coastline_path}).")
+
+
+def read_transects(config):
+    if (
+        "transects" in config["paths"]["input"].keys()
+        and "transects" in config["shapes"].keys()
+        and isdir(join(config["paths"]["base"], config["paths"]["input"]["transects"]))
+    ):
+
+        base = config["paths"]["base"]
+        transects_path = join(base, config["paths"]["input"]["transects"])
+        shapes = glob.glob(join(transects_path, "*.shp"))
+
+        if len(shapes) > 0:
+            transects = gpd.read_file(shapes[0]).to_crs(
+                config["shapes"]["transects"]["dst_crs"]
+            )
+            for key in ["fid", "id"]:
+                if key in transects.keys():
+                    transects = transects.astype({key: "int64"})
+
+            transects.to_file(
+                join(base, config["paths"]["db"]),
+                layer=config["db"]["layers"]["transects"]["name"],
+                driver="GPKG",
+            )
+        else:
+            raise Exception(
+                f"... cannot find any transects SHP file ({transects_path})."
+            )
