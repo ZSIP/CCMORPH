@@ -1,6 +1,7 @@
 import glob
 import shutil
 import geopandas as gpd
+import shapely.ops
 from os.path import exists, isdir, join, dirname
 from os import makedirs, remove
 
@@ -82,6 +83,15 @@ def read_coastline(config):
 
     if len(shapes) > 0:
         line = gpd.read_file(shapes[0]).to_crs(config["shapes"]["coastline"]["dst_crs"])
+        if len(line) > 1:  # in case of some separated geometries
+            line = gpd.GeoDataFrame(
+                {
+                    "id": [0],
+                    "geometry": [shapely.ops.linemerge(line.geometry.to_list())],
+                },
+                crs=config["shapes"]["coastline"]["dst_crs"],
+            )
+
         line.to_file(
             join(base, config["paths"]["db"]),
             layer=config["db"]["layers"]["coastline"]["name"],
