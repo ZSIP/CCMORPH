@@ -8,6 +8,7 @@ from os.path import join, basename
 from math import floor
 import pgen.config as config
 
+
 def reverse_geom(geom):
     def _reverse(x, y, z=None):
         if z:
@@ -15,6 +16,7 @@ def reverse_geom(geom):
         return x[::-1], y[::-1]
 
     return shapely.ops.transform(_reverse, geom)
+
 
 def generate_profiles(cfg):
     (
@@ -56,6 +58,9 @@ def generate_profiles(cfg):
 
                     height_raster = gdal.Open(cropped_file)
                     slope_raster = gdal.Open(slope_file)
+                    if height_raster == None or slope_raster == None:
+                        transect_idx += 1
+                        continue
                     height_array = height_raster.GetRasterBand(1).ReadAsArray()
                     slope_array = slope_raster.GetRasterBand(1).ReadAsArray()
                     height_nodata = height_raster.GetRasterBand(1).GetNoDataValue()
@@ -87,7 +92,9 @@ def generate_profiles(cfg):
                         xg.append(float(x_geo))
                         yg.append(float(y_geo))
                         current_dist += resolution
-                    elevation = list(map(lambda i: 0 if i == height_nodata else i, elevation))
+                    elevation = list(
+                        map(lambda i: 0 if i == height_nodata else i, elevation)
+                    )
                     # profile = profile.assign(nb=transect_idx, indx=df.index)
                     profile = pd.DataFrame(
                         {
@@ -114,7 +121,15 @@ def generate_profiles(cfg):
                     )
                     profiles = pd.concat([profiles, profile], ignore_index=True)
                     transect_idx += 1
-                    mono += profile.elevation[profile[profile.elevation > 0].index[0]:profile[profile.elevation > 0].index[-1]].diff().sum()
+                    mono += (
+                        profile.elevation[
+                            profile[profile.elevation > 0]
+                            .index[0] : profile[profile.elevation > 0]
+                            .index[-1]
+                        ]
+                        .diff()
+                        .sum()
+                    )
                 if mono > 0:
                     repeat = False
                 else:
@@ -141,7 +156,7 @@ def crop_profiles(cfg):
     try:
         buffers = glob.glob(join(buffer_path, "*.shp"))
         cropping_buffer = gpd.read_file(buffers[0]).to_crs(buffer_shape["dst_crs"])
-        cropping_buffer.id = 1 # change id
+        cropping_buffer.id = 1  # change id
 
         profile_files = glob.glob(join(in_profile_path, "*.csv"))
 
@@ -158,7 +173,7 @@ def crop_profiles(cfg):
             )
             cropped_profile = cropped_profile.to_crs(out_profile_csv["crs"])
             cropped_profile.to_csv(
-                join(out_profile_path, basename(source_file).replace('whole', 'crop')),
+                join(out_profile_path, basename(source_file).replace("whole", "crop")),
                 sep=out_profile_csv["sep"],
                 encoding=out_profile_csv["encoding"],
                 index=False,

@@ -1,6 +1,7 @@
 import glob
 import geopandas as gpd
 from osgeo import gdal, gdalconst
+import os
 from os.path import join, basename
 import pgen.config as config
 
@@ -23,7 +24,7 @@ def get_DEM(cfg):
 
         transects = gpd.read_file(db, layer=transects_layer["name"]).to_crs(
             transects_layer["crs"]
-        )        
+        )
         buffers = transects.buffer(buffer_width)
         buffers.to_file(db, layer=buffers_layer["name"], driver="GPKG")
         buffers_count = len(buffers.index)
@@ -32,7 +33,7 @@ def get_DEM(cfg):
             buffer_idx = 1
             dem_input = gdal.Open(input_file, gdal.GA_ReadOnly)
             src_nodata = dem_input.GetRasterBand(1).GetNoDataValue()
-            dst_nodata = -9999            
+            dst_nodata = -9999
             while buffer_idx <= buffers_count:
                 dem_cropped_file = join(
                     cropped_path, f"{buffer_idx}_crop_{basename(input_file)}"
@@ -49,7 +50,15 @@ def get_DEM(cfg):
                     cropToCutline=True,
                     outputType=gdalconst.GDT_Float32,
                 )
-                gdal.Warp(dem_cropped_file, dem_input, options=options)
+                gdal_dataset = gdal.Warp(dem_cropped_file, dem_input, options=options)
+                max, min, mean, stddev = gdal_dataset.GetRasterBand(1).GetStatistics(
+                    0, 1
+                )
+
+                if mean == 0 and stddev == 0:  # empty
+                    os.remove(dem_cropped_file)
+                    buffer_idx += 1
+                    continue
 
                 slope_file = join(
                     slope_path, f"{buffer_idx}_slope_{basename(input_file)}"
