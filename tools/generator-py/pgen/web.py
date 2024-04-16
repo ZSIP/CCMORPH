@@ -68,15 +68,19 @@ def export_geojson(cfg):
             geojson = deepcopy(geojson_template)
             geojson["name"] = f"{file_name}.geojson"
             if len(filtered_profiles) > 0:
-                geojson["properties"]["firstPoint"] = int(filtered_profiles.iloc[0].no_point)
+                geojson["properties"]["firstPoint"] = int(
+                    filtered_profiles.iloc[0].no_point
+                )
             # "geojson_template": "{'name': '','type': 'FeatureCollection','features': [{'type': 'Feature','geometry': {'type': 'LineString','coordinates':[]}}], 'properties': {'firstPoint': 0}}"
-                
+
             for idx, row in filtered_profiles.iterrows():
                 geojson["features"][0]["geometry"]["coordinates"].append(
                     [row["x"], row["y"], row["elevation"]]
                 )
-            if len(geojson['features'][0]['geometry']['coordinates']) > 0:
-                with open(join(geojson_path, f"{file_name}.geojson"), "w") as geojson_file:
+            if len(geojson["features"][0]["geometry"]["coordinates"]) > 0:
+                with open(
+                    join(geojson_path, f"{file_name}.geojson"), "w"
+                ) as geojson_file:
                     json.dump(geojson, geojson_file)
     except Exception as e:
         print("... export_geojson function error")
@@ -90,12 +94,14 @@ def crop_profiles(db, profiles_layer, buffer_path, buffer_crs, export_crs):
 
     cropping_buffer = gpd.read_file(glob.glob(join(buffer_path, "*.shp"))[0]).to_crs(
         buffer_crs
-    )  # todo: name
+    )
+    if "id" not in cropping_buffer.keys():
+        cropping_buffer.insert(0, "id", [1])
 
     cropped_profiles = gpd.sjoin(
         profiles, cropping_buffer, predicate="within", how="left"
     ).set_crs(buffer_crs)
-    cropped_profiles = cropped_profiles[cropped_profiles.id == 1].to_crs(export_crs)
+    cropped_profiles = cropped_profiles[~cropped_profiles.isna().id].to_crs(export_crs)
     with warnings.catch_warnings():
         warnings.filterwarnings(
             "ignore",
