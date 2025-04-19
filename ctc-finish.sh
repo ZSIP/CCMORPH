@@ -1,3 +1,5 @@
+#!/bin/bash
+
 APP="ccmorph-ctc"
 OFF='\033[0m'
 YELLOW='\033[0;33m'
