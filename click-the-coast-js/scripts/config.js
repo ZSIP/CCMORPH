@@ -4,7 +4,7 @@ const config = {
             geojson: "data/web/geojson",
             clip: "data/web/geotiff",
             names: "data/web/names/names.json",
-            shaper: "data/web/results/shaper.csv", // ignored
+            shaper: "data/web/results/finder.csv",
         },
         output: {
             manual: "data/web/results/manual.csv"
