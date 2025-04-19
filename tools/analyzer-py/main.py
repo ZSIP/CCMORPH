@@ -209,13 +209,15 @@ last_zero_points.rename(
     inplace=True,
 )
 
-bottom_points.to_file(
-    join(shapes_output_path, "bottomPoints"), crs=config["shape"]["crs"]
+bottom_points.set_crs(crs=config["shape"]["crs"]).to_file(
+    join(shapes_output_path, "bottomPoints")
 )
-top_points.to_file(join(shapes_output_path, "topPoints"), crs=config["shape"]["crs"])
-first_zero_points.to_file(
-    join(shapes_output_path, "firstZeroPoints"), crs=config["shape"]["crs"]
+top_points.set_crs(crs=config["shape"]["crs"]).to_file(
+    join(shapes_output_path, "topPoints")
 )
-last_zero_points.to_file(
-    join(shapes_output_path, "lastZeroPoints"), crs=config["shape"]["crs"]
+first_zero_points.set_crs(crs=config["shape"]["crs"]).to_file(
+    join(shapes_output_path, "firstZeroPoints")
+)
+last_zero_points.set_crs(crs=config["shape"]["crs"]).to_file(
+    join(shapes_output_path, "lastZeroPoints")
 )
