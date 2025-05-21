@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # example_2011: 
 # ./ctc-download.sh example_2011_data/output/web/results
 

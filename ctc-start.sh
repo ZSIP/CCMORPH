@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # example_2011: 
 # ./ctc-start.sh example_2011_data/output/web
 
