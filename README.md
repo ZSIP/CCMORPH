@@ -1,3 +1,6 @@
+[!WARNING]
+The software in the form below (version 2.0) is no longer supported. A new fork of the software is available [here](https://github.com/Baltic-Coastal-Monitoring-Team/CMORPH). We cordially invite you to take a look at the new version of CMORPH.
+
 # The Coastal Cliffs Morphology Analysis Toolbox v2.0 (CCMORPH2)
 
 The toolbox is series of Python scripts accompanied with JavaScript tool that can be utilized to analyse dynamics of coastal cliffs based on DEM from different sources such as GPS-RTK, UAVs, aerial or terrestrial LiDAR scanners. Python scripts are client-based (run locally), while Java Script tool can be run as a server-based application (in a web-browser environment).
