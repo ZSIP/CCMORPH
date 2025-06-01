@@ -1,5 +1,5 @@
 > [!WARNING]
-> The software in the form below (version 2.0) is no longer supported. A new fork of the software is available [here](https://github.com/Baltic-Coastal-Monitoring-Team/CMORPH). Please take a look at the new version of [CMORPH](https://github.com/Baltic-Coastal-Monitoring-Team/CMORPH).
+> CCMORPH2 (version 2.0) is no longer supported. The new official fork of the software is available here: [CMORPH](https://github.com/Baltic-Coastal-Monitoring-Team/CMORPH).
 
 # The Coastal Cliffs Morphology Analysis Toolbox v2.0 (CCMORPH2)
 
